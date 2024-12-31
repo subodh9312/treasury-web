@@ -1,0 +1,60 @@
+<div class="container" [@onMainScreen]="isUserAuthenticated ? 'open' : 'close'">
+  <br />
+  <br />
+  <div class="row">
+    <div class="col-sm-4" style="margin-left: 100px">
+      <mat-card [routerLink]="['admin']">
+        <mat-card-header>
+          <div mat-card-avatar><mat-icon>supervisor_account</mat-icon></div>
+          <mat-card-title>ADMIN DASHBOARD</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <strong>USERS</strong>
+            </div>
+            <div class="col">
+              <strong>AUTHORITIES</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <strong>COMPANIES</strong>
+            </div>
+            <div class="col">
+              <strong>ACCOUNTS</strong>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <strong>COUNTER PARTY</strong>
+            </div>
+            <div class="col">
+              <strong>TAXATION</strong>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4">
+      <mat-card [routerLink]="['investments']">
+        <mat-card-header>
+          <div mat-card-avatar><mat-icon>attach_money</mat-icon></div>
+          <mat-card-title>INVESTMENTS</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="row">
+            <div class="col">
+              <strong>MUTUAL FUNDS</strong>
+            </div>
+            <div class="col">
+              <strong>FIXED DEPOSIT</strong>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

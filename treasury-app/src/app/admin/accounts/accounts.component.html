@@ -1,0 +1,48 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">ACCOUNTS</div>
+    <div class="col">
+      <button mat-stroked-button (click)="onAdd()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add Account</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd" class="child">
+    <app-add-account
+      (accountAdded)="onBack($event)"
+      (personAdded)="onPersonUpdated($event)"
+      [companyUpdated]="companyUpdated"
+      [userUpdated]="userUpdated"
+      [personUpdated]="personUpdated"
+    >
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-add-account>
+  </div>
+  <mat-tab-group
+    *ngIf="!isAdd"
+    #tabGroup
+    (selectedTabChange)="onTabSelectionChange($event)"
+  >
+    <mat-tab label="EXISTING">
+      <ng-template matTabContent class="child">
+        <app-account-list
+          (personAdded)="onPersonUpdated($event)"
+          (accountUpdated)="onAccountUpdated($event)"
+          [accountAdded]="accountUpdated"
+          [userUpdated]="userUpdated"
+          [personUpdated]="personUpdated"
+        ></app-account-list>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="PENDING">
+      <ng-template matTabContent class="child">
+        <app-pending-accounts
+          [accountAdded]="accountUpdated"
+          (accountUpdated)="onAccountUpdated($event)"
+        ></app-pending-accounts>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

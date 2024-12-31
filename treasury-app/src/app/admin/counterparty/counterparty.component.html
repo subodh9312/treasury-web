@@ -1,0 +1,22 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">COUNTERPARTIES</div>
+    <div class="col">
+      <button mat-stroked-button (click)="onAdd()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add Counterparty</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd" class="child">
+    <app-add-counterparty (counterPartyCreated)="onBack($event)">
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-add-counterparty>
+  </div>
+  <div *ngIf="!isAdd" class="child">
+    <app-counterparty-list
+      (counterPartyEvent)="(counterPartyUpdated)"
+    ></app-counterparty-list>
+  </div>
+</div>

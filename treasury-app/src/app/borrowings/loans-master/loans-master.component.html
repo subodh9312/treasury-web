@@ -1,0 +1,60 @@
+<div class="main">
+    <div class="header row">
+      <div class="col heading text-heading-primary">Loans Master</div>
+      <div class="col">
+        <button mat-stroked-button mat-flag-button (click)="onAdd()">
+          <mat-icon>add_box</mat-icon>
+          <span>Add Loan</span>
+        </button>
+        <input
+        hidden
+        type="file"
+        accept=".xlsx, .xls"
+        #fileInput
+        (change)="fileChanged($event)"
+      />
+      <button mat-stroked-button (click)="fileInput.click()">
+        <mat-icon>add_box</mat-icon>
+        <span>TRANSACTION UPLOAD</span>
+      </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="isAdd && !isSell" class="child">
+      <app-add-loan 
+        [workflowPendingLoan]="workflowPendingObject"
+        (transactionUpdated)="onBack($event)">
+        <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+      </app-add-loan>
+    </div>
+    <mat-tab-group
+      *ngIf="!isAdd && !isSell"
+      #tabGroup
+      (selectedTabChange)="onTabSelectionChange($event)">
+      <mat-tab label="RECENT">
+        <ng-template matTabContent class="child">
+          <app-loans-master-list
+            (closeLoan)="onSell($event)"
+            (modifyInterestRate)="onModifyIR($event)"
+            [transactionUpdated]="transactionUpdated">
+          </app-loans-master-list>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="PENDING">
+        <ng-template matTabContent class="child">
+            <app-loan-pending-transactions
+                (editTransaction)="onEdit($event)"
+                [transactionUpdated]="transactionUpdated">
+            </app-loan-pending-transactions>
+        </ng-template>
+    </mat-tab>
+    <mat-tab label="CLOSED">
+        <ng-template matTabContent class="child">
+            <app-closed-loans-list 
+              [transactionUpdated]="transactionUpdated">
+            </app-closed-loans-list>
+        </ng-template>
+    </mat-tab>
+    </mat-tab-group>
+  </div>
+  

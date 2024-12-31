@@ -1,0 +1,19 @@
+.applicability-overlay {
+    height: 100%;
+    width: 100%;
+  }
+  
+  ag-grid-angular {
+    width: 100%;
+    height: 90%;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .close-icon {
+    float: right;
+    cursor: pointer;
+  }
+  

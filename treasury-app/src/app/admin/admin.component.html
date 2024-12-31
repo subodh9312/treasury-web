@@ -1,0 +1,159 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer
+    #drawer
+    opened
+    class="example-sidenav"
+    mode="side"
+    [@onExpanded]="expanded ? 'open' : 'close'"
+  >
+    <div>
+      <mat-nav-list>
+        <div
+          mat-list-item
+          style="
+            background-color: rgb(170, 170, 170, 0.5);
+            text-align: center;
+            height: 100px;
+          "
+        >
+          <a (click)="reset()">
+            <h2 style="padding: 35px"><span>ADMIN</span></h2>
+          </a>
+        </div>
+
+        <div style="margin-top: 50px">
+          <a
+            mat-list-item
+            [class.active]="getActiveTab() === 'manage-users'"
+            (click)="setActiveTab('manage-users')"
+          >
+            USERS
+          </a>
+          <mat-divider></mat-divider>
+          <a
+            [class.active]="getActiveTab() === 'roles'"
+            mat-list-item
+            (click)="setActiveTab('roles')"
+          >
+            ROLES
+          </a>
+          <mat-divider></mat-divider>
+          <a
+            [class.active]="getActiveTab() === 'companies'"
+            mat-list-item
+            (click)="setActiveTab('companies')"
+          >
+            COMPANIES
+          </a>
+          <mat-divider></mat-divider>
+          <a
+            [class.active]="getActiveTab() === 'accounts'"
+            mat-list-item
+            (click)="setActiveTab('accounts')"
+          >
+            ACCOUNTS
+          </a>
+          <mat-divider></mat-divider>
+          <a
+            [class.active]="getActiveTab() === 'counterparty'"
+            mat-list-item
+            (click)="setActiveTab('counterparty')"
+          >
+            COUNTER PARTY
+          </a>
+          <mat-divider></mat-divider>
+          <a
+           [class.active]="getActiveTab() === 'taxes'"
+           mat-list-item
+           (click)="setActiveTab('taxes')"
+          >
+            TAXATION
+          </a>
+          <mat-divider></mat-divider>
+          <a
+           [class.active]="getActiveTab() === 'tds'"
+           mat-list-item
+           (click)="setActiveTab('tds')"
+          >
+            TAX DEDUCTED AT SOURCE
+          </a>
+        </div>
+      </mat-nav-list>
+    </div>
+    <button
+      *ngIf="expanded"
+      class="toggle-button-drawer"
+      mat-button
+      (click)="expanded = !expanded"
+    >
+      <mat-icon style="font-size: 30px">arrow_left</mat-icon>
+    </button>
+  </mat-drawer>
+
+  <mat-drawer-content [@onMainContentChange]="expanded ? 'open' : 'close'">
+    <button
+      *ngIf="!expanded"
+      class="toggle-button-drawer-content"
+      mat-button
+      (click)="expanded = !expanded"
+    >
+      <mat-icon style="font-size: 30px">arrow_right</mat-icon>
+    </button>
+
+    <div *ngIf="activeTab === 'manage-users'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-users
+          [roleUpdated]="roleUpdated"
+          (userEvent)="onUserUpdated($event)"
+        ></app-users>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'roles'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-roles (roleEvent)="onRoleUpdated($event)"></app-roles>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'companies'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-companies
+          (companyEvent)="onCompanyUpdated($event)"
+          (personEvent)="onPersonUpdated($event)"
+          [userUpdated]="userUpdated"
+          [personUpdated]="personUpdated"
+        ></app-companies>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'accounts'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-accounts
+          (accountEvent)="onAccountUpdated($event)"
+          (personEvent)="onPersonUpdated($event)"
+          [personUpdated]="personUpdated"
+          [userUpdated]="userUpdated"
+          [companyUpdated]="companyUpdated"
+        ></app-accounts>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'counterparty'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-counterparty></app-counterparty>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'taxes'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-taxes></app-taxes>
+      </div>
+    </div>
+
+    <div *ngIf="activeTab === 'tds'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-tds-applicabilities></app-tds-applicabilities>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

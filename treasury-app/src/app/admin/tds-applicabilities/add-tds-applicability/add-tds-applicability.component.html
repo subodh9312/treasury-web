@@ -1,0 +1,112 @@
+<div class="form-group">
+    <mat-card>
+        <ng-content></ng-content>
+        <form
+          [formGroup]="addTdsForm"
+          #formDirective="ngForm"
+          (ngSubmit)="onFormSubmit(addTdsForm, formDirective)">
+          <mat-error class="error" *ngIf="errorMessage">
+              <span>{{ errorMessage }}</span>
+              <span (click)="errorMessage = null" class="close">
+                  <mat-icon color="primary">clear</mat-icon>
+              </span>
+          </mat-error>
+          <div class="row">
+              <div class="col">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Investment Type</mat-label>
+                      <mat-select formControlName="investmentType">
+                          <mat-option *ngFor="let investmentType of investmentTypes" [value]="investmentType">
+                              {{ investmentType }}
+                          </mat-option>
+                      </mat-select>
+                      <mat-error>
+                          <span *ngIf="!f.investmentType.valid && f.investmentType.touched">
+                              <span *ngIf="f.investmentType.errors.required">
+                                  Please select an Investment Type!
+                              </span>
+                          </span>
+                      </mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Effective Date</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="picker"
+                        formControlName="effectiveDate" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker color="primary"></mat-datepicker>
+                    <mat-error>
+                        <span *ngIf="!f.effectiveDate.valid && f.effectiveDate.touched">
+                            <span *ngIf="f.effectiveDate.errors.required">
+                                Please select and Effective Date.
+                            </span>
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>TDS Percent</mat-label>
+                    <input type="number" formControlName="tdsPercent" matInput />
+                    <mat-error>
+                    <span *ngIf="!f.tdsPercent.valid && f.tdsPercent.touched">
+                        <span *ngIf="f.tdsPercent.errors.required">
+                            Please enter TDS Percent!
+                        </span>
+                        <span *ngIf="f.tdsPercent.errors.min">
+                            TDS Percent should not be less than 0.
+                        </span>
+                        <span *ngIf="f.tdsPercent.errors.max">
+                            TDS Percent should not be more than 100.
+                        </span>
+                    </span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Minimum Transaction Amount</mat-label>
+                    <input type="number" formControlName="minimumTransactionAmount" matInput />
+                    <mat-error>
+                    <span *ngIf="!f.minimumTransactionAmount.valid && f.minimumTransactionAmount.touched">
+                        <span *ngIf="f.minimumTransactionAmount.errors.required">
+                            Please enter Minimum Transaction Amount!
+                        </span>
+                        <span *ngIf="f.minimumTransactionAmount.errors.min">
+                            Minimum Transaction Amount should not be less than 0.
+                        </span>
+                    </span>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Counter Party</mat-label>
+                    <mat-select formControlName="counterParty">
+                        <mat-option *ngFor="let counterParty of counterParties" [value]="counterParty">
+                            {{ counterParty.counterPartyName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Company</mat-label>
+                    <mat-select formControlName="company">
+                        <mat-option *ngFor="let company of companies" [value]="company">
+                            {{ company.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
+          </div>
+          <button
+             [disabled]="!addTdsForm.valid"
+             mat-raised-button
+             type="submit"
+             color="primary"
+            >
+              SUBMIT
+            </button>
+            <ngx-spinner
+              *ngIf="isLoading"
+              color="black"
+              type="line-scale"
+              size="medium"
+            ></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

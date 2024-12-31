@@ -1,0 +1,301 @@
+<div class="form-group">
+    <mat-card class="mat-card-no-shadow">
+        <ng-content></ng-content>
+        <form
+            [formGroup]="buyFixedDeposit"
+            #formDirective="ngForm"
+            (ngSubmit)="onFormSubmit(buyFixedDeposit, formDirective)">
+            <mat-error *ngIf="errorMessage" class="error">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+            <div class="row form-heading">
+                <h2><strong>NEW FIXED DEPOSIT INVESTMENT</strong></h2>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company</mat-label>
+                        <mat-select formControlName="company"
+                            [compareWith]="compareObjects"
+                            (valueChange)="onCompanySelected($event)">
+                            <mat-option *ngFor="let company of companies" [value]="company">
+                                {{ company.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.company.valid && f.company.touched">
+                                <span *ngIf="f.company.errors.required">
+                                    Please select Company!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Start Date</mat-label>
+                        <input
+                          matInput
+                          [matDatepicker]="picker"
+                          formControlName="valueDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Debit Account</mat-label>
+                        <mat-select formControlName="debitAccount"
+                            [compareWith]="compareObjects">
+                            <mat-option *ngFor="let account of accounts" [value]="account">
+                                {{ account.accountNumber }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.debitAccount.valid && f.debitAccount.touched">
+                                <span *ngIf="f.debitAccount.errors.required">
+                                    Please Select a Debit Account!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Interest Rate</mat-label>
+                        <input type="number" formControlName="interestRate" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.interestRate.valid && f.interestRate.touched">
+                                <span *ngIf="f.interestRate.errors.required">
+                                    Interest Rate is Required!
+                                </span>
+                                <span *ngIf="f.interestRate.errors.min">
+                                    Interest Rate cannot be less than 0!
+                                </span>
+                                <span *ngIf="f.interestRate.errors.max">
+                                    Interest Rate cannot be greater than 0!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Country of Investment</mat-label>
+                        <mat-select formControlName="countryOfInvestment">
+                            <mat-option *ngFor="let country of countries" [value]="country">
+                                {{ country }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.countryOfInvestment.valid && f.countryOfInvestment.touched">
+                                <span *ngIf="f.countryOfInvestment.errors.required">
+                                    Please select a Country Of Investment!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>FDR Number</mat-label>
+                        <input type="text" formControlName="fdrNumber" matInput />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Compounding Type</mat-label>
+                        <mat-select formControlName="compoundingType" 
+                        (selectionChange)="onCompoundingTypeChange($event)">
+                            <mat-option *ngFor="let compoundingType of compoundingTypes" [value]="compoundingType">
+                                {{ compoundingType }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.compoundingType.valid && f.compoundingType.touched">
+                                <span *ngIf="f.compoundingType.errors.required">
+                                    Please select a Compounding Type!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    
+                    <div class="form-radio">
+                        <mat-label>Lein Marked</mat-label>
+                        <mat-radio-group
+                          formControlName="leinMarked"
+                          (change)="onLeinMarkedSelection($event)"
+                        >
+                          <mat-radio-button
+                            color="primary"
+                            value="true"
+                            [checked]="f.leinMarked.value"
+                            >Yes</mat-radio-button
+                          >
+                          <mat-radio-button
+                            color="primary"
+                            value="false"
+                            [checked]="!f.leinMarked.value"
+                            >No</mat-radio-button
+                          >
+                        </mat-radio-group>
+                      </div>
+                      <div class="form-radio">
+                        <mat-label>Lein Marked Utilization</mat-label>
+                        <mat-radio-group
+                            formControlName="leinMarkedUtilization"
+                            (change)="onLeinMarkedUtilizationSelection($event)"
+                        >
+                            <mat-radio-button
+                            color="primary"
+                            value="true"
+                            [checked]="f.leinMarkedUtilization.value"
+                            >Yes</mat-radio-button
+                            >
+                            <mat-radio-button
+                            color="primary"
+                            value="false"
+                            [checked]="!f.leinMarkedUtilization.value"
+                            >No</mat-radio-button
+                            >
+                        </mat-radio-group>
+                    </div>                    
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Counter Party</mat-label>
+                        <mat-select formControlName="counterParty"
+                            [compareWith]="compareObjects">
+                            <mat-option *ngFor="let counterParty of counterParties" [value]="counterParty">
+                                {{ counterParty.counterPartyName }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.counterParty.valid && f.counterParty.touched">
+                                <span *ngIf="f.counterParty.errors.required">
+                                    Please Select a Counter Party!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>                    
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Maturity Date</mat-label>
+                        <input
+                          matInput
+                          [matDatepicker]="picker1"
+                          formControlName="endDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker1">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker1 color="primary"></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Conventional Days</mat-label>
+                        <mat-select formControlName="conventionalDays">
+                            <mat-option *ngFor="let conventionalDay of conventionalDays" [value]="conventionalDay">
+                                {{ conventionalDay }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.conventionalDays.valid && f.conventionalDays.touched">
+                                <span *ngIf="f.conventionalDays.errors.required">
+                                    Please select Conventional Days for the FD!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Transaction Amount</mat-label>
+                        <input type="number" formControlName="transactionAmount" matInput />
+                        <mat-error>
+                          <span
+                            *ngIf="!f.transactionAmount.valid && f.transactionAmount.touched">
+                            <span *ngIf="f.transactionAmount.errors.required">
+                              Please enter Transaction Amount!
+                            </span>
+                          </span>
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Holiding Intention</mat-label>
+                        <mat-select formControlName="holdingIntention">
+                            <mat-option *ngFor="let holdingIntention of holdingIntentions" [value]="holdingIntention">
+                                {{ holdingIntention }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.holdingIntention.valid && f.holdingIntention.touched">
+                                <span *ngIf="f.holdingIntention.errors.required">
+                                    Please select a Holding Intention!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="form-radio">
+                        <mat-label>Callable</mat-label>
+                        <mat-radio-group formControlName="callable" >
+                            <mat-radio-button
+                            color="primary"
+                            value="true"
+                            [checked]="f.callable.value"
+                            >Yes</mat-radio-button
+                            >
+                            <mat-radio-button
+                            color="primary"
+                            value="false"
+                            [checked]="!f.callable.value"
+                            >No</mat-radio-button
+                            >
+                        </mat-radio-group>
+                    </div>
+                    <div class="form-radio">
+                        <mat-label>Floating</mat-label>
+                        <mat-radio-group formControlName="floating" >
+                            <mat-radio-button
+                                color="primary"
+                                value="true"
+                                [checked]="f.floating.value">
+                                Yes
+                            </mat-radio-button>
+                            <mat-radio-button
+                                color="primary"
+                                value="false"
+                                [checked]="!f.floating.value">
+                                No
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                      <mat-form-field appearance="outline">
+                        <mat-label>Compounding factor</mat-label>
+                        <input type="number" formControlName="interestCalculationFactor" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.interestCalculationFactor.valid && f.interestCalculationFactor.touched">
+                                <span *ngIf="f.interestCalculationFactor.errors.min">
+                                    Compounding factor should be greated than 0!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>                    
+                    <mat-form-field appearance="outline" >
+                        <mat-label>Lein Marked Amount</mat-label>
+                        <input type="number" formControlName="leinMarkedAmount" matInput />
+                    </mat-form-field>
+                      
+                </div>
+            </div>
+            <button
+                class="button-margin"
+                [disabled]="!buyFixedDeposit.valid"
+                mat-raised-button
+                type="submit"
+                color="primary"
+            >
+                <span *ngIf="!isEdit">SUBMIT</span>
+                <span *ngIf="isEdit">RESUBMIT</span>
+            </button>
+            <ngx-spinner
+                *ngIf="isLoading"
+                color="black"
+                type="line-scale"
+                size="medium"
+            ></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

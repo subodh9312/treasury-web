@@ -1,0 +1,74 @@
+<div class="form-group">
+  <mat-card>
+    <ng-content></ng-content>
+    <form
+      [formGroup]="createAuthorityForm"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(createAuthorityForm, formDirective)"
+    >
+      <div class="example-container">
+        <mat-error *ngIf="errorMessage" class="error">
+          <span>{{ errorMessage }}</span>
+          <span (click)="errorMessage = null" class="close">
+            <mat-icon color="primary">clear</mat-icon>
+          </span>
+        </mat-error>
+        <mat-form-field>
+          <mat-label>Context</mat-label>
+          <input type="text" formControlName="context" matInput />
+          <mat-error>
+            <div *ngIf="!f.context.valid && f.context.touched">
+              <span *ngIf="f.context.errors.required">
+                Please enter context!
+              </span>
+              <span *ngIf="f.context.errors.minlength">
+                Context must be at least 3 characters!
+              </span>
+              <span *ngIf="f.context.errors.maxlength">
+                Context must be less than 80 characters!
+              </span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Permission</mat-label>
+          <textarea rows="10" formControlName="permission" matInput> </textarea>
+          <mat-error>
+            <div *ngIf="!f.permission.valid && f.permission.touched">
+              <span *ngIf="f.permission.errors.required">
+                Please enter permission!
+              </span>
+              <span *ngIf="f.permission.errors.minlength">
+                Permission must be at least 3 characters!
+              </span>
+              <span *ngIf="f.permission.errors.maxlength">
+                Permission must be less than 80 characters!
+              </span>
+            </div>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Is System Admin Permission</mat-label>
+          <mat-select formControlName="systemAdminAuthority">
+            <mat-option [value]="true">true</mat-option>
+            <mat-option [value]="false">false</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button
+          [disabled]="!createAuthorityForm.valid"
+          mat-raised-button
+          type="submit"
+          color="primary"
+        >
+          SUBMIT
+        </button>
+        <ngx-spinner
+          *ngIf="isLoading"
+          color="black"
+          type="line-scale"
+          size="medium"
+        ></ngx-spinner>
+      </div>
+    </form>
+  </mat-card>
+</div>

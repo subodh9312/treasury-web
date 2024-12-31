@@ -1,0 +1,31 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">COMPANIES</div>
+    <div class="col">
+      <button mat-stroked-button (click)="onAdd()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add Company</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd" class="child">
+    <app-add-company
+      (companyCreated)="onBack($event)"
+      (personAdded)="onPersonUpdated($event)"
+      [userUpdated]="userUpdated"
+      [personUpdated]="personUpdated"
+    >
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-add-company>
+  </div>
+  <div *ngIf="!isAdd" class="child">
+    <app-company-list
+      (personAdded)="onPersonUpdated($event)"
+      (companyUpdated)="onCompanyUpdated($event)"
+      [companyCreated]="companyUpdated"
+      [userUpdated]="userUpdated"
+      [personUpdated]="personUpdated"
+    ></app-company-list>
+  </div>
+</div>

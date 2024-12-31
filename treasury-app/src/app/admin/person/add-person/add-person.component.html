@@ -1,0 +1,204 @@
+<div class="form-dialog">
+  <div>
+    <h1 mat-dialog-title class="title">Add New Contact</h1>
+    <mat-icon class="close-icon" (click)="onCancel()">cancel</mat-icon>
+  </div>
+  <form
+    [formGroup]="addPersonForm"
+    #formDirective="ngForm"
+    (ngSubmit)="onFormSubmit(addPersonForm, formDirective)"
+  >
+    <div mat-dialog-content class="dialog-content">
+      <div class="row">
+        <mat-error *ngIf="errorMessage" class="error">
+          <span>{{ errorMessage }}</span>
+          <span (click)="errorMessage = null" class="close">
+            <mat-icon color="primary">clear</mat-icon>
+          </span>
+        </mat-error>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input type="text" formControlName="firstName" matInput />
+            <mat-error>
+              <span *ngIf="!f.firstName.valid && f.firstName.touched">
+                <span *ngIf="f.firstName.errors.required">
+                  Please enter firstname!
+                </span>
+                <span *ngIf="f.firstName.errors.minlength">
+                  First Name must be atleast 3 characters!
+                </span>
+                <span *ngIf="f.firstName.errors.maxlength">
+                  First Name must be less than 20 characters!
+                </span>
+                <span *ngIf="f.firstName.errors.notBlank">
+                  First Name cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input type="text" formControlName="lastName" matInput />
+            <mat-error>
+              <span *ngIf="!f.lastName.valid && f.lastName.touched">
+                <span *ngIf="f.lastName.errors.maxlength">
+                  Last Name must be less than 20 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile Number</mat-label>
+            <input type="text" formControlName="mobileNumber" matInput />
+            <mat-error>
+              <span *ngIf="!f.mobileNumber.valid && f.mobileNumber.touched">
+                <span *ngIf="f.mobileNumber.errors.required">
+                  Please enter Mobile Number!
+                </span>
+                <span *ngIf="f.mobileNumber.errors.maxlength">
+                  Mobile Number must be less than 20 characters!
+                </span>
+                <span *ngIf="f.mobileNumber.errors.notBlank">
+                  Mobile Number cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Work Phone</mat-label>
+            <input type="text" formControlName="workPhone" matInput />
+            <mat-error>
+              <span *ngIf="!f.workPhone.valid && f.workPhone.touched">
+                <span *ngIf="f.workPhone.errors.maxlength">
+                  Work Phone should be less than 20 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="text" formControlName="emailId" matInput email />
+            <mat-error>
+              <span *ngIf="!f.emailId.valid && f.emailId.touched">
+                <span *ngIf="f.emailId.errors.required">
+                  Please enter email!
+                </span>
+                <span *ngIf="f.emailId.errors.maxlength">
+                  EmailId must be less than 80 characters!
+                </span>
+                <span *ngIf="f.emailId.errors.email">
+                  Please enter a valid email address!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Address Line 1</mat-label>
+            <input type="text" formControlName="addressLine1" matInput />
+            <mat-error>
+              <span *ngIf="!f.addressLine1.valid && f.addressLine1.touched">
+                <span *ngIf="f.addressLine1.errors.maxlength">
+                  Address Line 1 must be less than 200 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Address Line 2</mat-label>
+            <input type="text" formControlName="addressLine2" matInput />
+            <mat-error>
+              <span *ngIf="!f.addressLine2.valid && f.addressLine2.touched">
+                <span *ngIf="f.addressLine2.errors.maxlength">
+                  Address Line 2 must be less than 200 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nearest Land Mark</mat-label>
+            <input type="text" formControlName="nearestLandMark" matInput />
+            <mat-error>
+              <span
+                *ngIf="!f.nearestLandMark.valid && f.nearestLandMark.touched"
+              >
+                <span *ngIf="f.nearestLandMark.errors.maxlength">
+                  Nearest Landmark must be less than 200 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input type="text" formControlName="city" matInput />
+            <mat-error>
+              <span *ngIf="!f.city.valid && f.city.touched">
+                <span *ngIf="f.city.errors.maxlength">
+                  City must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <input type="text" formControlName="state" matInput />
+            <mat-error>
+              <span *ngIf="!f.state.valid && f.state.touched">
+                <span *ngIf="f.state.errors.maxlength">
+                  State must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Postal Code</mat-label>
+            <input type="text" formControlName="postalCode" matInput />
+            <mat-error>
+              <span *ngIf="!f.postalCode.valid && f.postalCode.touched">
+                <span *ngIf="f.postalCode.errors.maxlength">
+                  Postal Code must be less than 10 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.country.valid && f.country.touched">
+                <span *ngIf="f.country.errors.maxlength">
+                  Country must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button
+        [disabled]="!addPersonForm.valid"
+        class="row-element"
+        color="primary"
+        mat-raised-button
+        type="submit"
+      >
+        ADD
+      </button>
+      <ngx-spinner
+        *ngIf="isLoading"
+        color="black"
+        type="line-scale"
+        size="medium"
+      ></ngx-spinner>
+    </div>
+  </form>
+</div>

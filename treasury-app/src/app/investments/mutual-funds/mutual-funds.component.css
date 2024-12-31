@@ -1,0 +1,54 @@
+.main {
+  height: 100%;
+}
+
+mat-tab-group {
+  height: 100%;
+}
+
+.header {
+  text-align: end;
+  margin-top: 5px;
+}
+
+button {
+  background-color: white;
+  border: 0.5px solid;
+  margin-left: 4px;
+  
+}
+
+:host ::ng-deep .mat-tab-label {
+  width: 50%;
+}
+
+:host ::ng-deep .mat-tab-body-wrapper {
+  height: 100%;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.heading {
+  text-align: left;
+  padding: 10px;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.child {
+  height: 100%;
+}
+
+.back-icon {
+  cursor: pointer;
+  float: left;
+}
+.mat-stroked-button{
+  color:#3f51b5 !important;
+}
+.mat-card{
+  box-shadow: none!important;
+}

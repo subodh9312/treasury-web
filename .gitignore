@@ -10,6 +10,8 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+**/target/**
+
 # Package Files #
 *.jar
 *.war
@@ -19,6 +21,21 @@
 *.tar.gz
 *.rar
 
+.settings
+.project
+.classpath
+.gitignore
+.angular
+.bpmn
+**/root/**
+**/node_modules/**
+**/static/**
+**/.vscode/**
+
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-replay_pid*
+treasury-parent.iml
+treasury-parent/.idea/*
+*.iml
+.DS_Store

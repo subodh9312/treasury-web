@@ -1,0 +1,88 @@
+<div class="form-group">
+    <mat-card class="mat-card-no-shadow">
+        <mat-icon class="close-icon" (click)="onCancel()"></mat-icon>
+        <ng-content></ng-content>
+        <form [formGroup]="addLoanTransactionForm" #formDirective="ngForm"
+            (ngSubmit)="onFormSubmit(addLoanTransactionForm, formDirective)">
+            <mat-error *ngIf="errorMessage" class="error">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+
+            <div class="row form-heading">
+                <h2><strong>ADD LOAN TRANSACTION</strong></h2>
+            </div>
+            <div *ngIf="success">
+                <span>
+                    Loan Transaction added successfully.
+                </span>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Investment Number</mat-label>
+                        <input type="text" formControlName="InvestmentNumber" matInput />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Transaction Amount</mat-label>
+                        <input type="number" formControlName="transactionAmount" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.transactionAmount.valid && f.transactionAmount.touched">
+                                <span *ngIf="f.transactionAmount.errors.required">
+                                    Transaction Amount is Required!
+                                </span>
+                                <span *ngIf="f.transactionAmount.errors.min">
+                                    Transaction Amount cannot be less than 0!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Transaction Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="transactionDate" />
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Loan Transaction Type</mat-label>
+                        <mat-select formControlName="loanTransactionType">
+                            <mat-option *ngFor="let loanTransactionType of loanTransactionTypes" [value]="loanTransactionType">
+                                {{ loanTransactionType }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.loanTransactionType.valid && f.loanTransactionType.touched">
+                                <span *ngIf="f.loanTransactionType.errors.required">
+                                    Please select the Loan Transaction Type!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Remark</mat-label>
+                        <textarea formControlName="remark" matInput></textarea>
+                        <mat-error>
+                            <span *ngIf="!f.remark.valid && f.remark.touched">
+                                <span *ngIf="f.remark.errors.minlength">
+                                    Remark must be at least 3 characters!
+                                </span>
+                                <span *ngIf="f.remark.errors.maxlength">
+                                    Remark must be less than 200 characters!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <button class="button-margin" [disabled]="!addLoanTransactionForm.valid" mat-raised-button type="submit"
+                color="primary">
+                SUBMIT
+            </button>
+            <ngx-spinner *ngIf="isLoading" color="black" type="line-scale" size="medium"></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

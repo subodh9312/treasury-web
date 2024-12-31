@@ -1,0 +1,45 @@
+<div class="form-group">
+  <mat-card>
+    <form
+      [formGroup]="loginForm"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(loginForm, formDirective)"
+    >
+      <div class="example-container">
+        <mat-error *ngIf="errorMessage" class="error">
+          <span>{{ errorMessage }}</span>
+          <span (click)="errorMessage = null" class="close"
+            ><mat-icon color="primary">clear</mat-icon></span
+          >
+        </mat-error>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input type="text" formControlName="username" matInput />
+          <mat-error>
+            <span *ngIf="!f.username.valid && f.username.touched"
+              >Please enter username!</span
+            >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input type="password" formControlName="password" matInput />
+          <mat-error>
+            <span *ngIf="!f.password.valid && f.password.touched"
+              >Please enter password!</span
+            >
+          </mat-error>
+        </mat-form-field>
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          [disabled]="!loginForm.valid"
+        >
+          LOGIN
+        </button>
+      </div>
+      <ngx-spinner></ngx-spinner>
+    </form>
+  </mat-card>
+</div>

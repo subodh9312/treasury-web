@@ -1,0 +1,13 @@
+<div class="applicability-overlay">
+    <mat-icon class="close-icon" (click)="onCancel()"> cancel</mat-icon>
+    <h2>{{ fdrNumber }}</h2>
+    <ag-grid-angular
+        #agGrid
+        class="ag-theme-alpine"
+        [gridOptions]="gridOptions"        
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [suppressRowClickSelection]="true"
+        (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
+</div>

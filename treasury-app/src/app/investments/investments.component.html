@@ -1,0 +1,77 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer
+    #drawer
+    opened
+    class="example-sidenav"
+    mode="side"
+    [@onExpanded]="expanded ? 'open' : 'close'"
+  >
+    <div>
+      <mat-nav-list>
+        <div
+          mat-list-item
+          style="
+            background-color: rgb(170, 170, 170, 0.5);
+            text-align: center;
+            height: 100px;
+          "
+        >
+          <a (click)="reset()">
+            <h2 style="padding: 35px"><span>INVESTMENTS</span></h2>
+          </a>
+        </div>
+
+        <div style="margin-top: 50px">
+          <a
+            mat-list-item
+            [class.active]="getActiveTab() === 'manage-mutual-funds'"
+            (click)="setActiveTab('manage-mutual-funds')"
+          >
+            MUTUAL FUNDS
+          </a>
+          <mat-divider></mat-divider>
+          <a
+            [class.active]="getActiveTab() === 'manage-fixed-deposits'"
+            mat-list-item
+            (click)="setActiveTab('manage-fixed-deposits')"
+          >
+            FIXED DEPOSITS
+          </a>
+        </div>
+      </mat-nav-list>
+    </div>
+    <button
+      *ngIf="expanded"
+      class="toggle-button-drawer"
+      mat-button
+      (click)="expanded = !expanded"
+    >
+      <mat-icon style="font-size: 30px">arrow_left</mat-icon>
+    </button>
+  </mat-drawer>
+
+  <mat-drawer-content [@onMainContentChange]="expanded ? 'open' : 'close'">
+    <button
+      *ngIf="!expanded"
+      class="toggle-button-drawer-content"
+      mat-button
+      (click)="expanded = !expanded"
+    >
+      <mat-icon style="font-size: 30px">arrow_right</mat-icon>
+    </button>
+
+    <div
+      *ngIf="activeTab === 'manage-mutual-funds'"
+      class="example-sidenav-div"
+    >
+      <div class="example-sidenav-content">
+        <app-mutual-funds></app-mutual-funds>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'manage-fixed-deposits'" class="example-sidenav-div">
+      <div class="example-sidenav-content">
+        <app-fixed-deposits></app-fixed-deposits>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

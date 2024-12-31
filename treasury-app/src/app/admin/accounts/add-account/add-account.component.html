@@ -1,0 +1,227 @@
+<div class="form-group">
+  <mat-card class="mat-card-no-shadow">
+    <ng-content></ng-content>
+    <form
+      [formGroup]="addAccountForm"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(addAccountForm, formDirective)"
+    >
+      <mat-error *ngIf="errorMessage" class="error">
+        <span>{{ errorMessage }}</span>
+        <span (click)="errorMessage = null" class="close">
+          <mat-icon color="primary">clear</mat-icon>
+        </span>
+      </mat-error>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Account Number</mat-label>
+            <input type="text" formControlName="accountNumber" matInput />
+            <mat-error>
+              <span *ngIf="!f.accountNumber.valid && f.accountNumber.touched">
+                <span *ngIf="f.accountNumber.errors.required">
+                  Please enter Account Number!
+                </span>
+                <span *ngIf="f.accountNumber.errors.minlength">
+                  Account Number must be at least 3 characters!
+                </span>
+                <span *ngIf="f.accountNumber.errors.maxlength">
+                  Account Number must be less than 20 characters!
+                </span>
+                <span *ngIf="f.accountNumber.errors.notBlank">
+                  Account Number cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nickname</mat-label>
+            <input type="text" formControlName="nickname" matInput />
+            <mat-error>
+              <span *ngIf="!f.nickname.valid && f.nickname.touched">
+                <span *ngIf="f.nickname.errors.maxlength">
+                  Nickname must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Bank Name</mat-label>
+            <input type="text" formControlName="bankName" matInput />
+            <mat-error>
+              <span *ngIf="!f.bankName.valid && f.bankName.touched">
+                <span *ngIf="f.bankName.errors.required">
+                  Please enter Bank Name!
+                </span>
+                <span *ngIf="f.bankName.errors.maxlength">
+                  Bank Name must be less than 80 characters!
+                </span>
+                <span *ngIf="f.bankName.errors.notBlank">
+                  Bank Name cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>IFSC Code</mat-label>
+            <input type="text" formControlName="ifscCode" matInput />
+            <mat-error>
+              <span *ngIf="!f.ifscCode.valid && f.ifscCode.touched">
+                <span *ngIf="f.ifscCode.errors.required">
+                  Please enter IFSC Code!
+                </span>
+                <span *ngIf="f.ifscCode.errors.maxlength">
+                  IFSC Code must be less than 20 characters!
+                </span>
+                <span *ngIf="f.ifscCode.errors.notBlank">
+                  IFSC Code cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Bank Account GL Code</mat-label>
+            <input type="text" formControlName="bankAccountGLCode" matInput />
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.bankAccountGLCode.valid && f.bankAccountGLCode.touched
+                "
+              >
+                <span *ngIf="f.bankAccountGLCode.errors.maxlength">
+                  Bank Account GL Code must be less than 20 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Account Purpose</mat-label>
+            <textarea
+              rows="2"
+              formControlName="accountPurpose"
+              matInput
+            ></textarea>
+            <mat-error>
+              <span *ngIf="!f.accountPurpose.valid && f.accountPurpose.touched">
+                <span *ngIf="f.accountPurpose.errors.required">
+                  Please enter Account Purpose!
+                </span>
+                <span *ngIf="f.accountPurpose.errors.minlength">
+                  Account Purpose must be atleast 3 characters!
+                </span>
+                <span *ngIf="f.accountPurpose.errors.maxlength">
+                  Account Purpose must be less than 80 characters!
+                </span>
+                <span *ngIf="f.accountPurpose.errors.notBlank">
+                  Account Purpose cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Opening Balance</mat-label>
+            <input type="number" formControlName="openingBalance" matInput />
+            <mat-error>
+              <span *ngIf="!f.openingBalance.valid && f.openingBalance.touched">
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Primary Team</mat-label>
+            <input type="text" formControlName="primaryTeam" matInput />
+            <mat-error>
+              <span *ngIf="!f.primaryTeam.valid && f.primaryTeam.touched">
+                <span *ngIf="f.primaryTeam.errors.required">
+                  Please enter Primary Team!
+                </span>
+                <span *ngIf="f.primaryTeam.errors.minlength">
+                  Primary Team must be atleast 3 characters!
+                </span>
+                <span *ngIf="f.primaryTeam.errors.maxlength">
+                  Primary Team must be less than 80 characters!
+                </span>
+                <span *ngIf="f.primaryTeam.errors.notBlank">
+                  Primary Team cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-action">
+            <mat-label>Relationship Manager</mat-label>
+            <mat-select formControlName="relationshipManager">
+              <mat-option *ngFor="let person of persons" [value]="person">
+                {{ person.emailId }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.relationshipManager.valid && f.relationshipManager.touched
+                "
+              >
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <a class="add" (click)="onAddRelationshipManager()">
+            <mat-icon class="add-icon">add_box</mat-icon>
+            <span>
+              Add Relationship Manager
+            </span>
+          </a>
+          <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <mat-select formControlName="company">
+              <mat-option *ngFor="let company of companies" [value]="company">
+                {{ company.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.company.valid && f.company.touched">
+                <span *ngIf="f.company.errors.required">
+                  Please select company!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Account Currency</mat-label>
+            <mat-select formControlName="accountCurrency">
+              <mat-option
+                *ngFor="let currency of currencies"
+                [value]="currency"
+              >
+                {{ currency }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="!f.accountCurrency.valid && f.accountCurrency.touched"
+              >
+                <span *ngIf="f.accountCurrency.errors.required">
+                  Please enter account currency!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <button
+      class="button-margin"
+        [disabled]="!addAccountForm.valid"
+        mat-raised-button
+        type="submit"
+        color="primary"
+      >
+        SUBMIT
+      </button>
+      <ngx-spinner
+        *ngIf="isLoading"
+        color="black"
+        type="line-scale"
+        size="medium"
+      ></ngx-spinner>
+    </form>
+  </mat-card>
+</div>

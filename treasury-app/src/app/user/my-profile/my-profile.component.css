@@ -1,0 +1,35 @@
+mat-card {
+  width: 95%;
+  height: 80px;
+}
+
+mat-card-header {
+  font-size: smaller;
+  display: inline;
+}
+
+mat-card-content {
+  font-size: larger;
+}
+
+mat-error {
+  display: flex;
+}
+
+.row {
+  height: 600px;
+}
+
+.row-button {
+  margin-left: 40%;
+}
+
+button {
+  margin: 20px;
+  padding: 2px 30px;
+}
+
+.col {
+  width: 100%;
+  margin: 20px;
+}

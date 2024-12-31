@@ -1,0 +1,22 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer opened class="example-sidenav" mode="side">
+    <h2><a>Profile</a></h2>
+    <div class="drawer-button">
+      <button [class.active]="activeTab === profileTab" (click)="setActiveTab(profileTab)" mat-flat-button>My Profile</button>
+      <button [class.active]="activeTab === passwordTab" (click)="setActiveTab(passwordTab)" mat-flat-button>Change Password</button>
+    </div>
+  </mat-drawer>
+
+  <div [hidden]="activeTab !== profileTab" class="example-sidenav-div">
+    <div class="example-sidenav-content">
+      <app-my-profile [user]="user" (userUpdated)="onUserUpdated()"></app-my-profile>
+    </div>
+  </div>
+
+  <div [hidden]="activeTab !== passwordTab" class="example-sidenav-div">
+    <div class="example-sidenav-content">
+      <app-change-password [user]="user" (userUpdated)="onUserUpdated()"></app-change-password>
+    </div>
+  </div>
+
+</mat-drawer-container>

@@ -1,0 +1,54 @@
+.example-container {
+  width: 100%;
+  height: 92%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.example-sidenav-content {
+  display: block;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  /* overflow: hidden; */
+}
+
+.example-sidenav {
+  height: 100%;
+}
+
+.example-sidenav-div {
+  height: 100%;
+}
+
+.active {
+  background-color: rgb(170, 170, 170, 0.5);
+}
+
+.active-item {
+  font-weight: bolder;
+}
+
+ul {
+  text-align: left;
+}
+
+a {
+  cursor: pointer;
+}
+
+.toggle-button-drawer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.toggle-button-drawer-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.mat-tab-body-wrapper {
+  height: 100%;
+}

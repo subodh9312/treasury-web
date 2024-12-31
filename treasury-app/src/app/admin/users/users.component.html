@@ -1,0 +1,40 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">USER MANAGEMENT</div>
+    <div class="col">
+      <button mat-stroked-button (click)="onAdd()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add New User</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd" class="child">
+    <app-create-user (userCreated)="onBack($event)" [authorityUpdated]="authorityUpdated">
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-create-user>
+  </div>
+  <mat-tab-group
+    *ngIf="!isAdd"
+    #tabGroup
+    (selectedTabChange)="onTabSelectionChange($event)"
+  >
+    <mat-tab label="EXISTING">
+      <ng-template matTabContent class="child">
+        <app-user-list
+          (userUpdated)="onUserUpdated($event)"
+          [updatedUser]="userUpdated"
+          [authorityUpdated]="authorityUpdated"
+        ></app-user-list>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="PENDING">
+      <ng-template matTabContent class="child">
+        <app-pending-users
+          (userUpdated)="onUserUpdated($event)"
+          [userAdded]="userUpdated"
+        ></app-pending-users>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

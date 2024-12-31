@@ -1,0 +1,23 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">AUTHORITIES</div>
+    <div class="col">
+      <button mat-raised-button (click)="onAdd()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add Authority</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd" class="child">
+    <app-create-authority (authorityCreated)="onBack($event)">
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-create-authority>
+  </div>
+  <div *ngIf="!isAdd" class="child">
+    <app-authority-list
+      [newAuthority]="authorityUpdated"
+      (authorityUpdated)="onAuthorityUpdated($event)"
+    ></app-authority-list>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">MUTUAL FUNDS TRANSACTION MANAGEMENT</div>
+    <div class="col">
+      <button mat-stroked-button (click)="onAdd(false)">
+        <mat-icon>add_box</mat-icon>
+        <span>BUY - LUMPSUM</span>
+      </button>
+      <button mat-stroked-button (click)="onAdd(true)">
+        <mat-icon>add_box</mat-icon>
+        <span>CREATE SIP</span>
+      </button>
+      <input
+        hidden
+        type="file"
+        accept=".xlsx, .xls"
+        #fileInput
+        (change)="fileChanged($event)"
+      />
+      <button mat-stroked-button (click)="fileInput.click()">
+        <mat-icon>add_box</mat-icon>
+        <span>TRANSACTION UPLOAD</span>
+      </button>
+      <button mat-stroked-button (click)="onReloadNav()">
+        <mat-icon>refresh_box</mat-icon>
+        <span>RELOAD HISTORICAL NAV</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd && !isSell" class="child">
+    <app-buy-mutual-fund
+      [isSIP]="isSIP"
+      [workflowPendingMutualFundInvestment]="workflowPendingObject"
+      (transactionUpdated)="onBack($event)"
+    >
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-buy-mutual-fund>
+  </div>
+  <div *ngIf="isSell && !isAdd" class="child">
+    <app-sell-mutual-fund
+      [isSWP]="isSWP"
+      [workflowPendingMutualFundInvestment]="workflowPendingObject"
+      [sellMutualFundInvestment]="sellMutualFund"
+      (transactionUpdated)="onBack($event)"
+    >
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-sell-mutual-fund>
+  </div>
+  <mat-tab-group
+    *ngIf="!isAdd && !isSell"
+    #tabGroup
+    (selectedTabChange)="onTabSelectionChange($event)"
+  >
+    <mat-tab label="RECENT">
+      <ng-template matTabContent class="child">
+        <app-mf-recent-transactions
+          (isSWP)="onSWP($event)"
+          (sellMutualFund)="onSell($event)"
+          [transactionUpdated]="transactionUpdated"
+        ></app-mf-recent-transactions>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="PENDING">
+      <ng-template matTabContent class="child">
+        <app-mf-pending-transactions
+          (editTransaction)="onEdit($event)"
+          [transactionUpdated]="transactionUpdated"
+        ></app-mf-pending-transactions>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

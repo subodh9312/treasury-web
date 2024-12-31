@@ -1,0 +1,222 @@
+<div class="form-group">
+  <mat-card>
+    <ng-content></ng-content>
+    <form
+      [formGroup]="addCompanyForm"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(addCompanyForm, formDirective)"
+    >
+      <mat-error *ngIf="errorMessage" class="error">
+        <span>{{ errorMessage }}</span>
+        <span (click)="errorMessage = null" class="close">
+          <mat-icon color="primary">clear</mat-icon>
+        </span>
+      </mat-error>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type="text" formControlName="name" matInput />
+            <mat-error>
+              <span *ngIf="!f.name.valid && f.name.touched">
+                <span *ngIf="f.name.errors.required">
+                  Please enter Company Name!
+                </span>
+                <span *ngIf="f.name.errors.minlength">
+                  Company Name must be at least 3 characters!
+                </span>
+                <span *ngIf="f.name.errors.maxlength">
+                  Company Name must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>GST Number</mat-label>
+            <input type="text" formControlName="gstNumber" matInput />
+            <mat-error>
+              <span *ngIf="!f.gstNumber.valid && f.gstNumber.touched">
+                <span *ngIf="f.gstNumber.errors.maxlength">
+                  GST Number must be less than 25 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>PAN</mat-label>
+            <input type="text" formControlName="pan" matInput />
+            <mat-error>
+              <span *ngIf="!f.pan.valid && f.pan.touched">
+                <span *ngIf="f.pan.errors.maxlength">
+                  PAN must be less than 15 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Accounting Currency</mat-label>
+            <mat-select formControlName="accountingCurrency">
+              <mat-option
+                *ngFor="let currency of currencies"
+                [value]="currency"
+              >
+                {{ currency }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.accountingCurrency.valid && f.accountingCurrency.touched
+                "
+              >
+                <span *ngIf="f.accountingCurrency.errors.required">
+                  Please enter accounting currency!
+                </span>
+                <span *ngIf="f.accountingCurrency.errors.maxlength">
+                  Accounting Currency must be less than 3 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-action">
+            <mat-label>Primary Contact</mat-label>
+            <mat-select formControlName="primaryContact">
+              <mat-option *ngFor="let person of persons" [value]="person">
+                {{ person.emailId }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.primaryContact.valid && f.primaryContact.touched">
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <a class="add" (click)="onAddPrimaryContact()">
+            <mat-icon class="add-icon">add_box</mat-icon>
+            <span>
+              Add Primary Contact
+            </span>
+          </a>
+          <mat-form-field appearance="outline">
+            <mat-label>Legal Entity Identifier</mat-label>
+            <input
+              type="text"
+              formControlName="legalEntityIdentifier"
+              matInput
+            />
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.legalEntityIdentifier.valid &&
+                  f.legalEntityIdentifier.touched
+                "
+              >
+                <span *ngIf="f.legalEntityIdentifier.errors.maxlength">
+                  Legal Entity Id must be less than 50 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Address Line 1</mat-label>
+            <input type="text" formControlName="addressLine1" matInput />
+            <mat-error>
+              <span *ngIf="!f.addressLine1.valid && f.addressLine1.touched">
+                <span *ngIf="f.addressLine1.errors.maxlength">
+                  Address Line 1 must be less than 200 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Address Line 2</mat-label>
+            <input type="text" formControlName="addressLine2" matInput />
+            <mat-error>
+              <span *ngIf="!f.addressLine2.valid && f.addressLine2.touched">
+                <span *ngIf="f.addressLine2.errors.maxlength">
+                  Address Line 2 must be less than 200 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Nearest Land Mark</mat-label>
+            <input type="text" formControlName="nearestLandMark" matInput />
+            <mat-error>
+              <span
+                *ngIf="!f.nearestLandMark.valid && f.nearestLandMark.touched"
+              >
+                <span *ngIf="f.nearestLandMark.errors.maxlength">
+                  Nearest Landmark must be less than 200 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input type="text" formControlName="city" matInput />
+            <mat-error>
+              <span *ngIf="!f.city.valid && f.city.touched">
+                <span *ngIf="f.city.errors.maxlength">
+                  City must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <input type="text" formControlName="state" matInput />
+            <mat-error>
+              <span *ngIf="!f.state.valid && f.state.touched">
+                <span *ngIf="f.state.errors.maxlength">
+                  State must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Postal Code</mat-label>
+            <input type="text" formControlName="postalCode" matInput />
+            <mat-error>
+              <span *ngIf="!f.postalCode.valid && f.postalCode.touched">
+                <span *ngIf="f.postalCode.errors.maxlength">
+                  Postal Code must be less than 10 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.country.valid && f.country.touched">
+                <span *ngIf="f.country.errors.maxlength">
+                  Country must be less than 80 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <button
+        [disabled]="!addCompanyForm.valid"
+        mat-raised-button
+        type="submit"
+        color="primary"
+      >
+        SUBMIT
+      </button>
+      <ngx-spinner
+        *ngIf="isLoading"
+        color="black"
+        type="line-scale"
+        size="medium"
+      ></ngx-spinner>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,206 @@
+<div class="form-group">
+  <mat-card class="mat-card-no-shadow">
+    <ng-content></ng-content>
+    <form
+      [formGroup]="sellMutualFund"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(sellMutualFund, formDirective)"
+    >
+      <mat-error *ngIf="errorMessage" class="error">
+        <span>{{ errorMessage }}</span>
+        <span (click)="errorMessage = null" class="close">
+          <mat-icon color="primary">clear</mat-icon>
+        </span>
+      </mat-error>
+      <div class="row form-heading">
+        <h2 *ngIf="!isSWP"><strong>SELL-LUMPSUM</strong></h2>
+        <h2 *ngIf="isSWP"><strong>SWP</strong></h2>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <input type="text" formControlName="company" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Fund Family</mat-label>
+            <input type="text" formControlName="fundFamily" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Scheme Name</mat-label>
+            <input type="text" formControlName="scheme" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Scheme Type</mat-label>
+            <input type="text" formControlName="schemeType" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Portfolio Quantity</mat-label>
+            <input type="number" formControlName="portfolioQuantity" matInput />
+          </mat-form-field>
+          <div class="form-radio">
+            <mat-label>Transaction Type</mat-label>
+            <mat-radio-group
+              formControlName="transactionType"
+              (change)="onTransactionTypeSelection($event)"
+            >
+              <mat-radio-button
+                color="primary"
+                value="true"
+                [checked]="f.transactionType.value"
+                >Amount</mat-radio-button
+              >
+              <mat-radio-button
+                [disabled]="isSWP"
+                color="primary"
+                value="false"
+                [checked]="!f.transactionType.value"
+                >Quantity</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+          <mat-form-field appearance="outline" class="form-radio-actions">
+            <mat-label>Transaction Amount</mat-label>
+            <input type="number" formControlName="transactionAmount" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Transaction Quantity</mat-label>
+            <input
+              type="number"
+              formControlName="transactionQuantity"
+              matInput
+            />
+            <mat-error>
+              <span
+                *ngIf="
+                  f.transactionQuantity.enabled &&
+                  !f.transactionQuantity.valid &&
+                  f.transactionQuantity.touched
+                "
+              >
+                <span *ngIf="f.transactionQuantity.errors.invalidQuantity">
+                  Transaction Quantity cannot be greater than Portfolio
+                  Quantity!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="isSWP">
+            <mat-label>Transaction Frequency</mat-label>
+            <mat-select formControlName="transactionFrequency">
+              <mat-option
+                *ngFor="let transactionFrequency of transactionFrequencies"
+                [value]="transactionFrequency"
+              >
+                {{ transactionFrequency }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.transactionFrequency.valid &&
+                  f.transactionFrequency.touched
+                "
+              >
+                <span *ngIf="f.transactionFrequency.errors.required">
+                  Please select Transaction Frequency!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Debit Account</mat-label>
+            <input type="text" formControlName="debitAccount" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Holding Intention</mat-label>
+            <input type="text" formControlName="holdingIntention" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Country Of Investment</mat-label>
+            <input type="text" formControlName="countryOfInvestment" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Exit Load Percentage</mat-label>
+            <input
+              type="number"
+              formControlName="exitLoadPercentage"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Exit Load Minimum Duration</mat-label>
+            <input
+              type="number"
+              formControlName="exitLoadApplicableMinimumDuration"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Lein Marked Amount</mat-label>
+            <input type="number" formControlName="leinMarkedAmount" matInput />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Lein Marked Utilization Amount</mat-label>
+            <input
+              type="number"
+              formControlName="leinMarkedUtilizationAmount"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field color="primary" appearance="fill">
+            <mat-label>Value Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="valueDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker color="primary"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="isSWP">
+            <mat-label>Period Of Investment</mat-label>
+            <input
+              type="number"
+              formControlName="periodOfInvestment"
+              matInput
+              placeholder="No of weeks/months/quarters/years based on Frequency"
+            />
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.periodOfInvestment.valid && f.periodOfInvestment.touched
+                "
+              >
+                <span *ngIf="f.periodOfInvestment.errors.notZero">
+                  Period of Investment for SWP should be greater than 0!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <button
+        [class.button-margin]="isSWP"
+        [disabled]="!sellMutualFund.valid"
+        mat-stroked-button
+        type="submit"
+        color="primary"
+      >
+        <span *ngIf="!isEdit">SUBMIT</span>
+        <span *ngIf="isEdit">RESUBMIT</span>
+      </button>
+      <ngx-spinner
+        *ngIf="isLoading"
+        color="black"
+        type="line-scale"
+        size="medium"
+      ></ngx-spinner>
+    </form>
+  </mat-card>
+</div>

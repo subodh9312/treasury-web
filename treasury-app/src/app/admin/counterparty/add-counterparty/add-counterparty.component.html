@@ -1,0 +1,116 @@
+<div class="form-group">
+  <mat-card>
+    <ng-content></ng-content>
+    <form
+      [formGroup]="addCounterPartyForm"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(addCounterPartyForm, formDirective)"
+    >
+      <mat-error class="error" *ngIf="errorMessage">
+        <span>{{ errorMessage }}</span>
+        <span (click)="errorMessage = null" class="close">
+          <mat-icon color="primary">clear</mat-icon>
+        </span>
+      </mat-error>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Counter Party Name</mat-label>
+            <input type="text" formControlName="counterPartyName" matInput />
+            <mat-error>
+              <span
+                *ngIf="!f.counterPartyName.valid && f.counterPartyName.touched"
+              >
+                <span *ngIf="f.counterPartyName.errors.required">
+                  Please enter the Counter Party Name
+                </span>
+                <span *ngIf="f.counterPartyName.errors.minlength">
+                  Counter Party Name must be at least 3 characters!
+                </span>
+                <span *ngIf="f.counterPartyName.errors.maxlength">
+                  Counter Party Name must be less than 80 characters!
+                </span>
+                <span *ngIf="f.counterPartyName.errors.notBlank">
+                  Counter Party Name cannot be blank!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Classification</mat-label>
+            <mat-select formControlName="counterPartyClassification">
+              <mat-option
+                *ngFor="let classification of counterPartyClassifications"
+                [value]="classification"
+              >
+                {{ classification }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.counterPartyClassification.valid &&
+                  f.counterPartyClassification.touched
+                "
+              >
+                <span *ngIf="f.counterPartyClassification.errors.required">
+                  Please enter Classification for Counter Party!
+                </span>
+                <span *ngIf="f.counterPartyClassification.errors.maxlength">
+                  Counter Party Classification must be less than 3 characters!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Credit Rating</mat-label>
+            <mat-select formControlName="creditRating">
+              <mat-option
+                *ngFor="let credRating of creditRatings"
+                [value]="credRating"
+              >
+                {{ credRating }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.creditRating.valid && f.creditRating.touched">
+                <span *ngIf="f.creditRating.errors.required">
+                  Please select Credit Rating for the Counter Party!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Enabled Investment Types</mat-label>
+            <mat-select formControlName="enabledInvestmentTypes" multiple>
+                <mat-option *ngFor="let investmentType of investmentTypes" [value]="investmentType">
+                    {{ investmentType }}
+                </mat-option>
+            </mat-select>
+            <mat-error>
+                <span *ngIf="!f.enabledInvestmentTypes.valid && f.enabledInvestmentTypes.touched">
+                    <span *ngIf="f.enabledInvestmentTypes.errors.required">
+                        Please select at least one Investment Type!
+                    </span>
+                </span>
+            </mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+      <button
+        [disabled]="!addCounterPartyForm.valid"
+        mat-raised-button
+        type="submit"
+        color="primary"
+      >
+        SUBMIT
+      </button>
+      <ngx-spinner
+        *ngIf="isLoading"
+        color="black"
+        type="line-scale"
+        size="medium"
+      ></ngx-spinner>
+    </form>
+  </mat-card>
+</div>

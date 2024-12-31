@@ -1,0 +1,63 @@
+<div class="form-group">
+    <mat-card class="mat-card-no-shadow">
+        <mat-icon class="close-icon" (click)="onCancel()"></mat-icon>
+        <ng-content></ng-content>
+        <form [formGroup]="closeLoanVerifyForm" #formDirective="ngForm"
+            (ngSubmit)="onFormSubmit(closeLoanVerifyForm, formDirective)">
+            <mat-error *ngIf="errorMessage" class="error">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+
+            <div class="row form-heading">
+                <h2><strong>CLOSE LOAN</strong></h2>
+            </div>
+            <div *ngIf="success">
+                <span>
+                    Loan Closed successfully.
+                </span>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Investment Number</mat-label>
+                        <input type="text" formControlName="InvestmentNumber" matInput />
+                    </mat-form-field>
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Closure Date</mat-label>
+                        <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="transactionDate" (ngModelChange)="getClosureAmount()" />
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <div *ngIf="showOutstanding">
+                        {{ outstandingMessage }}
+                        <br />
+                        <mat-form-field appearance="outline">
+                            <mat-label>Transaction Amount</mat-label>
+                            <input type="number" formControlName="transactionAmount" matInput (ngModelChanged)="validateTransactionAmount()" />
+                            <mat-error>
+                                <span *ngIf="!f.transactionAmount.valid && f.transactionAmount.touched">
+                                    <span *ngIf="f.transactionAmount.errors.required">
+                                        Transaction Amount is Required!
+                                    </span>
+                                    <span *ngIf="f.transactionAmount.errors.min">
+                                        Transaction Amount cannot be less than Closure Amount!
+                                    </span>
+                                </span>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <button class="button-margin" [disabled]="!closeLoanVerifyForm.valid" mat-raised-button type="submit"
+                color="primary">
+                SUBMIT
+            </button>
+            <ngx-spinner *ngIf="isLoading" color="black" type="line-scale" size="medium"></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

@@ -1,0 +1,337 @@
+<div class="form-group">
+  <mat-card class="mat-card-no-shadow">
+    <ng-content></ng-content>
+    <form
+      [formGroup]="buyMutualFund"
+      #formDirective="ngForm"
+      (ngSubmit)="onFormSubmit(buyMutualFund, formDirective)"
+    >
+      <mat-error *ngIf="errorMessage" class="error">
+        <span>{{ errorMessage }}</span>
+        <span (click)="errorMessage = null" class="close">
+          <mat-icon color="primary">clear</mat-icon>
+        </span>
+      </mat-error>
+      <div class="row form-heading">
+        <h2 *ngIf="!isSIP"><strong>BUY - LUMPSUM</strong></h2>
+        <h2 *ngIf="isSIP"><strong>SIP</strong></h2>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <mat-select
+              formControlName="company"
+              [compareWith]="compareObjects"
+              (valueChange)="onCompanySelected($event)"
+            >
+              <mat-option *ngFor="let comp of companies" [value]="comp">
+                {{ comp.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.company.valid && f.company.touched">
+                <span *ngIf="f.company.errors.required">
+                  Please select Company!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Fund Family</mat-label>
+            <mat-select
+              formControlName="fundFamily"
+              (valueChange)="onFundFamilySelected($event)"
+            >
+              <mat-option
+                *ngFor="let fundFamily of fundFamilies"
+                [value]="fundFamily"
+              >
+                {{ fundFamily }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.fundFamily.valid && f.fundFamily.touched">
+                <span *ngIf="f.fundFamily.errors.required">
+                  Please select fund family!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Scheme Name</mat-label>
+            <mat-select formControlName="scheme" [compareWith]="compareObjects">
+              <mat-option
+                *ngFor="let nav of schemesForFundFamily"
+                [value]="nav"
+              >
+                {{ nav.schemeName }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.scheme.valid && f.scheme.touched">
+                <span *ngIf="f.scheme.errors.required">
+                  Please select scheme Name!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Scheme Type</mat-label>
+            <mat-select formControlName="schemeType">
+              <mat-option
+                *ngFor="let schemeType of schemeTypes"
+                [value]="schemeType"
+              >
+                {{ schemeType }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.schemeType.valid && f.schemeType.touched">
+                <span *ngIf="f.schemeType.errors.required">
+                  Please select Scheme Type!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Transaction Amount</mat-label>
+            <input type="number" formControlName="transactionAmount" matInput />
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.transactionAmount.valid && f.transactionAmount.touched
+                "
+              >
+                <span *ngIf="f.transactionAmount.errors.required">
+                  Please enter Transaction Amount!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Debit Account</mat-label>
+            <mat-select
+              formControlName="debitAccount"
+              [compareWith]="compareObjects"
+            >
+              <mat-option *ngFor="let account of accounts" [value]="account">
+                {{ account.accountNumber + " - " + account.bankName }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span *ngIf="!f.debitAccount.valid && f.debitAccount.touched">
+                <span *ngIf="f.debitAccount.errors.required">
+                  Please select Debit Account!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Holding Intention</mat-label>
+            <mat-select formControlName="holdingIntention">
+              <mat-option
+                *ngFor="let holdingIntention of holdingIntentions"
+                [value]="holdingIntention"
+              >
+                {{ holdingIntention }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="!f.holdingIntention.valid && f.holdingIntention.touched"
+              >
+                <span *ngIf="f.holdingIntention.errors.required">
+                  Please select Holding Intention!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Country Of Investment</mat-label>
+            <mat-select formControlName="countryOfInvestment">
+              <mat-option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.countryOfInvestment.valid && f.countryOfInvestment.touched
+                "
+              >
+                <span *ngIf="f.countryOfInvestment.errors.required">
+                  Please select Country of Investment!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="isSIP">
+            <mat-label>Transaction Frequency</mat-label>
+            <mat-select formControlName="transactionFrequency">
+              <mat-option
+                *ngFor="let transactionFrequency of transactionFrequencies"
+                [value]="transactionFrequency"
+              >
+                {{ transactionFrequency }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.transactionFrequency.valid &&
+                  f.transactionFrequency.touched
+                "
+              >
+                <span *ngIf="f.transactionFrequency.errors.required">
+                  Please select Transaction Frequency!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field color="primary" appearance="fill">
+            <mat-label>Value Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="valueDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker color="primary"></mat-datepicker>
+          </mat-form-field>
+          <div class="form-radio">
+            <mat-label>Exit Load</mat-label>
+            <mat-radio-group
+              formControlName="exitLoad"
+              (change)="onExitLoadSelection($event)"
+            >
+              <mat-radio-button
+                color="primary"
+                value="true"
+                [checked]="f.exitLoad.value"
+                >Yes</mat-radio-button
+              >
+              <mat-radio-button
+                color="primary"
+                value="false"
+                [checked]="!f.exitLoad.value"
+                >No</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+          <mat-form-field appearance="outline" class="form-radio-actions">
+            <mat-label>Exit Load Percentage</mat-label>
+            <input
+              type="number"
+              formControlName="exitLoadPercentage"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Exit Load Minimum Duration</mat-label>
+            <input
+              type="number"
+              formControlName="exitLoadApplicableMinimumDuration"
+              matInput
+            />
+          </mat-form-field>
+          <div class="form-radio">
+            <mat-label>Lein Marked</mat-label>
+            <mat-radio-group
+              formControlName="leinMarked"
+              (change)="onLeinMarkedSelection($event)"
+            >
+              <mat-radio-button
+                color="primary"
+                value="true"
+                [checked]="f.leinMarked.value"
+                >Yes</mat-radio-button
+              >
+              <mat-radio-button
+                color="primary"
+                value="false"
+                [checked]="!f.leinMarked.value"
+                >No</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+          <mat-form-field appearance="outline" class="form-radio-actions">
+            <mat-label>Lein Marked Amount</mat-label>
+            <input type="number" formControlName="leinMarkedAmount" matInput />
+          </mat-form-field>
+          <div class="form-radio">
+            <mat-label>Lein Marked Utilization</mat-label>
+            <mat-radio-group
+              formControlName="leinMarkedUtilization"
+              (change)="onLeinMarkedUtilizationSelection($event)"
+            >
+              <mat-radio-button
+                color="primary"
+                value="true"
+                [checked]="f.leinMarkedUtilization.value"
+                >Yes</mat-radio-button
+              >
+              <mat-radio-button
+                color="primary"
+                value="false"
+                [checked]="!f.leinMarkedUtilization.value"
+                >No</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+          <mat-form-field appearance="outline" class="form-radio-actions">
+            <mat-label>Lein Marked Utilization Amount</mat-label>
+            <input
+              type="number"
+              formControlName="leinMarkedUtilizationAmount"
+              matInput
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" *ngIf="isSIP">
+            <mat-label>Period Of Investment</mat-label>
+            <input
+              type="number"
+              formControlName="periodOfInvestment"
+              matInput
+              placeholder="No of weeks/months/quarters/years based on Frequency"
+            />
+            <mat-error>
+              <span
+                *ngIf="
+                  !f.periodOfInvestment.valid && f.periodOfInvestment.touched
+                "
+              >
+                <span *ngIf="f.periodOfInvestment.errors.notZero">
+                  Period of Investment for SIP should be greater than 0!
+                </span>
+              </span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- [class.button-margin]="isSIP" -->
+      <button
+        [class.button-margin-top]="isSIP"
+        class="button-margin-bottom"
+        [disabled]="!buyMutualFund.valid"
+        mat-raised-button
+        type="submit"
+        color="primary"        
+      >
+        <span *ngIf="!isEdit">SUBMIT</span>
+        <span *ngIf="isEdit">RESUBMIT</span>
+      </button>
+      <ngx-spinner
+        *ngIf="isLoading"
+        color="black"
+        type="line-scale"
+        size="medium"
+      ></ngx-spinner>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,209 @@
+<div class="form-group">
+    <mat-card>
+        <ng-content></ng-content>
+        <form [formGroup]="addLoanForm" #formDirective="ngForm" (ngSubmit)="onFormSubmit(addLoanForm, formDirective)">
+            <mat-error class="error" *ngIf="errorMessage">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+            <div class="row form-heading">
+                <h2><strong>NEW - LOAN</strong></h2>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lender Counterparty</mat-label>
+                        <mat-select formControlName="counterParty">
+                            <mat-option *ngFor="let counterParty of counterParties" [value]="counterParty">
+                                {{ counterParty.counterPartyName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Borrower Company</mat-label>
+                        <mat-select formControlName="company" [compareWith]="compareObjects"
+                            (valueChange)="onCompanySelected($event)">
+                            <mat-option *ngFor="let company of companies" [value]="company">
+                                {{ company.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.company.valid && f.company.touched">
+                                <span *ngIf="f.company.errors.required">
+                                    Please select company!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Debit Account</mat-label>
+                        <mat-select formControlName="debitAccount" [compareWith]="compareObjects">
+                            <mat-option *ngFor="let account of accounts" [value]="account">
+                                {{ account.accountNumber }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.debitAccount.valid && f.debitAccount.touched">
+                                <span *ngIf="f.debitAccount.errors.required">
+                                    Please Select a Debit Account!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Loan Reference Number</mat-label>
+                        <input type="text" pattern="^[a-zA-Z0-9 ]+$" formControlName="referenceNumber" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.referenceNumber.valid && f.referenceNumber.touched">
+                                <span *ngIf="!f.referenceNumber.errors.required">
+                                    Please enter the Loan Reference Number
+                                </span>
+                                <span *ngIf="f.referenceNumber.errors.minlength">
+                                    Loan Reference Number must be at least 3 characters!
+                                </span>
+                                <span *ngIf="f.referenceNumber.errors.maxlength">
+                                    Loan Reference Number must be less than 80 characters!
+                                </span>
+                                <span *ngIf="f.referenceNumber.errors.notBlank">
+                                    Loan Reference Number cannot be blank!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Loan Sanction Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="sanctionDate" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Loan Closure Date</mat-label>
+                        <input matInput [matDatepicker]="picker1" formControlName="closureDate" />
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1 color="primary"></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agreement Sanction Amount</mat-label>
+                        <input type="number" formControlName="sanctionAmount" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.sanctionAmount.valid && f.sanctionAmount.touched">
+                                <span *ngIf="f.sanctionAmount.errors.required">
+                                    Please enter Sanction Amount!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sanction Interest Rate (%)</mat-label>
+                        <input type="number" formControlName="interestRate" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.interestRate.valid && f.interestRate.touched">
+                                <span *ngIf="f.interestRate.errors.required">
+                                    Please enter Interest Rate!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="form-radio">
+                        <mat-label>Transaction Type</mat-label>
+                        <mat-radio-group formControlName="borrowing">
+                            <mat-radio-button color="primary" value="true" [checked]="f.borrowing.value">
+                                Borrowing
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" value="false" [checked]="!f.borrowing.value">
+                                Lending
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="form-radio">
+                        <mat-label>Loan Security</mat-label>
+                        <mat-radio-group formControlName="secured">
+                            <mat-radio-button color="primary" value="true" [checked]="f.secured.value">
+                                Secured
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" value="false" [checked]="!f.secured.value">
+                                Unsecured
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Details of Security</mat-label>
+                        <input type="text" formControlName="securityDetails" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.securityDetails.valid && f.securityDetails.touched">
+                                <span *ngIf="!f.securityDetails.errors.required && f.securityDetails == 'Secured'">
+                                    Please enter the Security details
+                                </span>
+                                <span *ngIf="f.securityDetails.errors.notBlank">
+                                    Security details cannot be blank!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Interest Frequency</mat-label>
+                        <mat-select formControlName="compoundingType" 
+                        (selectionChange)="onCompoundingTypeChange($event)">
+                            <mat-option *ngFor="let compoundingType of compoundingTypes" [value]="compoundingType">
+                                {{ compoundingType }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.compoundingType.valid && f.compoundingType.touched">
+                                <span *ngIf="f.compoundingType.errors.required">
+                                    Please select a Compounding Type!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Calculating factor</mat-label>
+                        <input type="number" formControlName="interestCalculationFactor" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.interestCalculationFactor.valid && f.interestCalculationFactor.touched">
+                                <span *ngIf="f.interestCalculationFactor.errors.min">
+                                    Calculating factor should be greated than 0!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>                    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Conventional Days</mat-label>
+                        <mat-select formControlName="conventionalDays">
+                            <mat-option *ngFor="let conventionalDay of conventionalDays" [value]="conventionalDay">
+                                {{ conventionalDay }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.conventionalDays.valid && f.conventionalDays.touched">
+                                <span *ngIf="f.conventionalDays.errors.required">
+                                    Please select Conventional Days for the FD!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="form-radio">
+                        <mat-label>Pre-closure Allowed</mat-label>
+                        <mat-radio-group formControlName="preClosureAllowed">
+                            <mat-radio-button color="primary" value="true" [checked]="f.preClosureAllowed.value">
+                                Yes
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" value="false" [checked]="!f.preClosureAllowed.value">
+                                No
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <button [disabled]="!addLoanForm.valid" class="button-margin-bottom" mat-raised-button type="submit"
+                color="primary">
+                SUBMIT
+            </button>
+            <ngx-spinner *ngIf="isLoading" color="black" type="line-scale" size="medium"></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

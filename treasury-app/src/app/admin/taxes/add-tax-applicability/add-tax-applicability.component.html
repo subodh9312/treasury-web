@@ -1,0 +1,114 @@
+<div class="form_group">
+    <mat-card>
+        <ng-content></ng-content>
+        <form
+         [formGroup]="addTaxApplicabilityForm"
+         #formDirective="ngForm"
+         (ngSubmit)="onFormSubmit(addTaxApplicabilityForm, formDirective)"
+        >
+            <mat-error class="error" *ngIf="errorMessage">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tax</mat-label>
+                        <mat-select formControlName="tax">
+                            <mat-option *ngFor="let tax of taxes" [value]="tax">
+                                {{ tax.taxName }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.tax.valid && f.tax.touched">
+                                <span *ngIf="f.tax.errors.required">
+                                    Please select a Tax!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Investment Type</mat-label>
+                        <mat-select formControlName="investmentType">
+                            <mat-option *ngFor="let investmentType of investmentTypes"
+                             [value]="investmentType">
+                             {{ investmentType }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.investmentType.valid && f.investmentType.touched">
+                                <span *ngIf="f.investmentType.errors.required">
+                                    Please select an Investment Type!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Transaction Sides Applicable</mat-label>
+                        <mat-select formControlName="transactionSidesApplicable" multiple>
+                            <mat-option *ngFor="let transactionSide of transactionSides" [value]="transactionSide">
+                                {{ transactionSide }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.transactionSidesApplicable.valid && f.transactionSidesApplicable.touched">
+                                <span *ngIf="f.transactionSidesApplicable.errors.required">
+                                    Please select at least one Transaction Side!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Effective Date</mat-label>
+                        <input
+                            matInput
+                            [matDatepicker]="picker"
+                            formControlName="effectiveDate" />
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker color="primary"></mat-datepicker>
+                        <mat-error>
+                            <span *ngIf="!f.effectiveDate.valid && f.effectiveDate.touched">
+                                <span *ngIf="f.effectiveDate.errors.required">
+                                    Please select and Effective Date.
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tax Percent</mat-label>
+                        <input type="number" formControlName="taxPercent" matInput />
+                        <mat-error>
+                        <span *ngIf="!f.taxPercent.valid && f.taxPercent.touched">
+                            <span *ngIf="f.taxPercent.errors.required">
+                                Please enter Tax Percent!
+                            </span>
+                            <span *ngIf="f.taxPercent.errors.min">
+                                Tax Percent should not be less than 0.
+                            </span>
+                            <span *ngIf="f.taxPercent.errors.max">
+                                Tax Percent should not be more than 100.
+                            </span>
+                        </span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <button
+             [disabled]="!addTaxApplicabilityForm.valid"
+             mat-raised-button
+             type="submit"
+             color="primary"
+            >
+              SUBMIT
+            </button>
+            <ngx-spinner
+              *ngIf="isLoading"
+              color="black"
+              type="line-scale"
+              size="medium"
+            ></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

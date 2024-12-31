@@ -1,0 +1,81 @@
+<div class="form-group">        
+    <mat-card class="mat-card-no-shadow">
+        <mat-icon class="close-icon" (click)="onCancel()"> cancel</mat-icon>  
+        <ng-content></ng-content>
+        <form
+            [formGroup]="addInterestRateForm"
+            #formDirective="ngForm"
+            (ngSubmit)="onFormSubmit(addInterestRateForm, formDirective)">
+            <mat-error *ngIf="errorMessage" class="error">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+            
+            <div class="row form-heading">
+                <h2><strong>ADD INTEREST RATE TO INVESTMENT</strong></h2>
+            </div>
+            <div *ngIf="success">
+                <span>
+                    Interest Rate added successfully.
+                </span>
+            </div>            
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Investment Number</mat-label>
+                        <input type="text" formControlName="InvestmentNumber" matInput />
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Interest Rate</mat-label>
+                        <input type="number" formControlName="interestRate" matInput />
+                        <mat-error>
+                            <span *ngIf="!f.interestRate.valid && f.interestRate.touched">
+                                <span *ngIf="f.interestRate.errors.required">
+                                    Interest Rate is Required!
+                                </span>
+                                <span *ngIf="f.interestRate.errors.min">
+                                    Interest Rate cannot be less than 0!
+                                </span>
+                                <span *ngIf="f.interestRate.errors.max">
+                                    Interest Rate cannot be greater than 0!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Effective Date</mat-label>
+                        <input
+                          matInput
+                          [matDatepicker]="picker"
+                          formControlName="effectiveDate"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker color="primary"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <button
+            class="button-margin"
+            [disabled]="!addInterestRateForm.valid"
+            mat-raised-button
+            type="submit"
+            color="primary"
+        >
+            <span >SUBMIT</span>
+            
+        </button>
+        <ngx-spinner
+            *ngIf="isLoading"
+            color="black"
+            type="line-scale"
+            size="medium"
+        ></ngx-spinner>
+        </form>
+    </mat-card>
+    </div>

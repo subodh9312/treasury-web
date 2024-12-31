@@ -1,0 +1,42 @@
+<mat-error *ngIf="errorMessage" class="error">
+    <span>{{ errorMessage }}</span>
+    <span (click)="errorMessage = null" class="close">
+        <mat-icon color="primary">clear</mat-icon>
+    </span>
+</mat-error>
+<br />
+<div class="page-size-selector">
+  Page Size:
+  <select
+    #paginationSelect
+    (change)="onPageSizeChanged(paginationSelect.value)"
+    [(ngModel)]="pageSize"
+  >
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+  </select>
+</div>
+<ag-grid-angular
+  #agGrid
+  class="ag-theme-alpine"
+  [gridOptions]="gridOptions"
+  [domLayout]="domLayout"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [suppressRowClickSelection]="true"
+  [frameworkComponents]="frameworkComponents"
+  [tooltipShowDelay]="tooltipShowDelay"
+  (gridReady)="onGridReady($event)"
+  (cellClicked)="onCellClicked($event)" 
+  (selectionChanged)="onSelectionChanged($event)"
+  (cellValueChanged)="onCellValueChanged($event)"
+>
+</ag-grid-angular>
+<ngx-spinner
+    *ngIf="isLoading"
+    color="black"
+    type="line-scale"
+    size="medium"
+></ngx-spinner>

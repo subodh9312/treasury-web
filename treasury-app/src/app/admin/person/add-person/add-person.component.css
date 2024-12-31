@@ -1,0 +1,43 @@
+.title {
+  padding-left: 200px;
+}
+
+.form-dialog {
+  width: 600px;
+  height: 650px;
+  overflow: hidden;
+}
+
+form {
+  height: 100%;
+}
+
+.dialog-content {
+  height: 150%;
+}
+
+.row-element {
+  text-align: center;
+  margin: 20px auto;
+  width: 50%;
+}
+
+.col {
+  width: 100%;
+  height: 400px;
+  margin: 30px 25px;
+}
+
+.mat-dialog-title {
+  display: inline-flex;
+}
+
+.close-icon {
+  float: right;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 900px;
+}
+

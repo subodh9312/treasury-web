@@ -1,0 +1,91 @@
+.form-group {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+mat-card {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+mat-error {
+  display: flex;
+}
+
+mat-checkbox {
+  font-size: medium;
+}
+
+.col {
+  width: 100%;
+  height: 400px;
+  margin: 20px 80px;
+  margin-bottom: 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-field-action {
+  height: 70px;
+}
+
+.add {
+  display: flex;
+  font-size: 10px;
+  font-weight: lighter;
+  font-style: italic;
+  cursor: pointer;
+}
+
+a span {
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+
+.add-icon {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 220px;
+  width: 50%;
+}
+
+.button-margin {
+  margin-top: 300px;
+  margin-bottom: 10px;
+}
+
+mat-radio-group {
+  margin-left: 50px;
+  padding-top: 20px;
+}
+
+mat-radio-button {
+  margin-left: 20px;
+}
+
+.form-radio {
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 400;
+  margin-top: 10px;
+  text-align: left;
+  padding: 10px;
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
+
+.form-radio-actions {
+  margin-top: 20px;
+}
+
+.form-heading {
+  text-align: center;
+  display: block;
+}

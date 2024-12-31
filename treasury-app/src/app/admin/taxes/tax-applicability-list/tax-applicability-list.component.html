@@ -1,0 +1,33 @@
+<div class="applicability-overlay">
+  <mat-icon class="close-icon" (click)="onCancel()">cancel</mat-icon>
+  <h2>Tax - {{ taxName }}</h2>
+  
+  <mat-error *ngIf="errorMessage" class="error">
+    <span>{{ errorMessage }}</span>
+    <span (click)="errorMessage = null" class="close">
+      <mat-icon color="primary">clear</mat-icon>
+    </span>
+  </mat-error>
+  <div *ngIf="selectedRowNode">
+    <button mat-flat-button (click)="onDelete()">
+      <mat-icon>delete</mat-icon>
+      <span>DELETE</span>
+    </button>
+  </div>  
+  <ag-grid-angular
+    #agGrid
+    class="ag-theme-alpine"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [suppressRowClickSelection]="true"
+    (selectionChanged)="onSelectionChanged($event)"    
+  >
+  </ag-grid-angular>
+</div>
+<ngx-spinner
+    *ngIf="isLoading"
+    color="black"
+    type="line-scale"
+    size="medium"
+></ngx-spinner>

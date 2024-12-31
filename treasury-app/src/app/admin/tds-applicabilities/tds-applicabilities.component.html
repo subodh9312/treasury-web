@@ -1,0 +1,20 @@
+<div class="main">
+    <div class="header row">
+        <div class="col heading text-heading-primary">TAX DEDUCTED AT SOURCE</div>
+        <div class="col">
+            <button mat-stroked-button mat-flag-button (click)="onAdd()">
+                <mat-icon>add_box</mat-icon>
+                <span>Add TDS Config</span>
+            </button>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="isAdd" class="child">
+        <app-add-tds-applicability (tdsCreated)="onBack($event)">
+            <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+        </app-add-tds-applicability>
+    </div>
+    <div *ngIf="!isAdd" class="child">
+        <app-tds-applicabilities-list (tdsEvent)=(tdsUpdated)></app-tds-applicabilities-list>
+    </div>
+</div>

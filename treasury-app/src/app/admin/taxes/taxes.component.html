@@ -1,0 +1,29 @@
+<div class="main">
+  <div class="header row">
+    <div class="col heading text-heading-primary">TAXES</div>
+    <div class="col">
+      <button mat-stroked-button mat-flag-button (click)="onAdd()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add Tax</span>
+      </button>
+      <button mat-stroked-button mat-flag-button (click)="onTaxApplicability()">
+        <mat-icon>add_box</mat-icon>
+        <span>Add Tax Applicability</span>
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngIf="isAdd && !isApplicabilityAdd" class="child">
+    <app-add-tax (taxCreated)="onBack($event)">
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-add-tax>
+  </div>
+  <div *ngIf="!isAdd && isApplicabilityAdd" class="child">
+    <app-add-tax-applicability (taxApplicabilityCreated)="onBack($event)">
+      <mat-icon class="back-icon" (click)="onBack(null)">arrow_back</mat-icon>
+    </app-add-tax-applicability>
+  </div>
+  <div *ngIf="!isAdd && !isApplicabilityAdd" class="child">
+    <app-taxes-list (taxEvent)="(taxUpdated)"></app-taxes-list>
+  </div>
+</div>

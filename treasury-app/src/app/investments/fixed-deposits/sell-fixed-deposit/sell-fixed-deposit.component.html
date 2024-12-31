@@ -1,0 +1,154 @@
+<div class="form-group">
+    <mat-card class="mat-card-no-shadow">
+        <ng-content></ng-content>
+        <form
+          [formGroup]="sellFixedDeposit"
+          #formDirective="ngForm"
+          (ngSubmit)="onFormSubmit(sellFixedDeposit, formDirective)">
+            <mat-error *ngIf="errorMessage" class="error">
+                <span>{{ errorMessage }}</span>
+                <span (click)="errorMessage = null" class="close">
+                    <mat-icon color="primary">clear</mat-icon>
+                </span>
+            </mat-error>
+            <div class="row form-heading">
+                <h2>LIQUIDATE FIXED DEPOSIT</h2>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company</mat-label>
+                        <mat-select formControlName="company"
+                            [compareWith]="compareObjects">
+                            <mat-option *ngFor="let company of companies" [value]="company">
+                                {{ company.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <span *ngIf="!f.company.valid && f.company.touched">
+                                <span *ngIf="f.company.errors.required">
+                                    Please select Company!
+                                </span>
+                            </span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>FDR Number</mat-label>
+                        <input type="text" formControlName="fdrNumber" matInput />
+                      </mat-form-field>
+                      <div class="form-radio">
+                          <mat-label>Is Lein Closed</mat-label>
+                          <mat-radio-group
+                              formControlName="isLeinClosed"
+                              (change)="onLeinClosedChange($event)"
+                          >
+                              <mat-radio-button
+                              color="primary"
+                              value="true"
+                              [checked]="f.isLeinClosed.value"
+                              >Yes</mat-radio-button
+                              >
+                              <mat-radio-button
+                              color="primary"
+                              value="false"
+                              [checked]="!f.isLeinClosed.value"
+                              >No</mat-radio-button
+                              >
+                          </mat-radio-group>
+                      </div>
+                      <mat-form-field color="primary" appearance="fill">
+                        <mat-label>Pre-Closure date</mat-label>
+                          <input
+                            matInput
+                            [matDatepicker]="picker1"
+                            formControlName="preClosureDate"                            
+                          />
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker1"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #picker1 color="primary"></mat-datepicker>
+                          <mat-error *ngIf="f.preClosureDate.errors?.preClosureDtLessLeinClosure">Preclosure date should be greater than lein closure date.</mat-error>
+                      </mat-form-field>
+                </div>
+                <div class="col">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Counter Party</mat-label>
+                    <mat-select formControlName="counterParty"
+                        [compareWith]="compareObjects">
+                        <mat-option *ngFor="let counterParty of counterParties" [value]="counterParty">
+                            {{ counterParty.counterPartyName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <span *ngIf="!f.counterParty.valid && f.counterParty.touched">
+                            <span *ngIf="f.counterParty.errors.required">
+                                Please Select a Counter Party!
+                            </span>
+                        </span>
+                    </mat-error>
+                  </mat-form-field> 
+                  <mat-form-field appearance="outline">
+                    <mat-label>Credit Account</mat-label>
+                    <mat-select formControlName="creditAccount"
+                        [compareWith]="compareObjects">
+                        <mat-option *ngFor="let account of accounts" [value]="account">
+                            {{ account.accountNumber }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        <span *ngIf="!f.creditAccount.valid && f.creditAccount.touched">
+                            <span *ngIf="f.creditAccount.errors.required">
+                                Please Select a credit Account!
+                            </span>
+                        </span>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field color="primary" appearance="fill">
+                    <mat-label>Lien Closure Date</mat-label>
+                      <input
+                        matInput
+                        [matDatepicker]="picker"
+                        formControlName="leinClosuredate"
+                      />
+                      <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker"
+                      ></mat-datepicker-toggle>
+                      <mat-datepicker #picker color="primary"></mat-datepicker>
+                  </mat-form-field>
+                  <div class="form-radio" style="border: none;">                        
+                    <span (click)="onShowInterestRates()" title="Click to update rates" style="cursor:pointer;"><a class="material-icons">list</a></span> 
+                    <mat-label style="margin-left: 10px;">View/Update Interest Rates</mat-label>  
+                  </div>    
+                  <!-- <mat-form-field appearance="outline">
+                    <mat-label>Pre-Closure Penalty</mat-label>
+                    <input type="number" formControlName="preClosurePenalty" matInput />
+                    <mat-error>
+                        <span *ngIf="!f.preClosurePenalty.valid && f.preClosurePenalty.touched">
+                            <span *ngIf="f.preClosurePenalty.errors.min">
+                              Pre-Closure Penalty should be greated than 0!
+                            </span>
+                        </span>
+                    </mat-error>
+                </mat-form-field> -->
+              </div>
+            </div>
+            <button
+                class ="button-margin"
+                [disabled]="!sellFixedDeposit.valid"
+                mat-raised-button
+                type="submit"
+                color="primary"            >
+                <span >SUBMIT</span>
+                
+            </button>
+            <ngx-spinner
+                *ngIf="isLoading"
+                color="black"
+                type="line-scale"
+                size="medium"
+            ></ngx-spinner>
+        </form>
+    </mat-card>
+</div>

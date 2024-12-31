@@ -1,0 +1,212 @@
+<mat-error *ngIf="errorMessage" class="error">
+  <span>{{ errorMessage }}</span>
+  <span (click)="errorMessage = null" class="close">
+    <mat-icon color="primary">clear</mat-icon>
+  </span>
+</mat-error>
+<div class="row">
+  <div class="col">
+    <mat-card>
+      <mat-card-header>
+        First Name
+      </mat-card-header>
+      <mat-card-content>
+        <span *ngIf="!editedUser && user && user.userDetails">
+          {{ user.userDetails.firstName }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.firstName"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Last Name
+      </mat-card-header>
+      <mat-card-content>
+        <span *ngIf="!editedUser && user && user.userDetails">
+          {{ user.userDetails.lastName }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.lastName"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Email ID
+      </mat-card-header>
+      <mat-card-content>
+        <span *ngIf="!editedUser && user && user.userDetails">
+          {{ user.userDetails.emailId }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.emailId"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Mobile Number
+      </mat-card-header>
+      <mat-card-content>
+        <span *ngIf="!editedUser && user && user.userDetails">
+          {{ user.userDetails.mobileNumber }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.mobileNumber"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Work Phone
+      </mat-card-header>
+      <mat-card-content>
+        <span *ngIf="!editedUser && user && user.userDetails">
+          {{ user.userDetails.workPhone }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.workPhone"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Address Line 1
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.addressLine1 }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.addressLine1"
+        />
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col">
+    <mat-card>
+      <mat-card-header>
+        Address Line 2
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.addressLine2 }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.addressLine2"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Nearest Landmark
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.nearestLandMark }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.nearestLandMark"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        City
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.city }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.city"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        State
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.state }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.state"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Postal Code
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.postalCode }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.postalCode"
+        />
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-header>
+        Country
+      </mat-card-header>
+      <mat-card-content>
+        <span
+          *ngIf="
+            !editedUser && user && user.userDetails && user.userDetails.address
+          "
+        >
+          {{ user.userDetails.address.country }}
+        </span>
+        <input
+          *ngIf="editedUser"
+          [(ngModel)]="editedUser.userDetails.address.country"
+        />
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div class="row-button">
+  <button mat-raised-button (click)="onEdit()">EDIT</button>
+  <button mat-raised-button (click)="onSave()">SAVE</button>
+</div>

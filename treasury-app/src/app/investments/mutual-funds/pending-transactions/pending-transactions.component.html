@@ -1,0 +1,114 @@
+<mat-error *ngIf="errorMessage" class="error">
+  <span>{{ errorMessage }}</span>
+  <span (click)="errorMessage = null" class="close">
+    <mat-icon color="primary">clear</mat-icon>
+  </span>
+</mat-error>
+<div *ngIf="selectedRowNode">
+  <div>
+    <button
+      *ngIf="
+        selectedRowNode.data.pendingObject.transaction.transactionStatus ===
+        'PENDING_RESUBMIT'
+      "
+      mat-flat-button
+      (click)="onEdit()"
+    >
+      <mat-icon>edit</mat-icon>
+      <span>EDIT</span>
+    </button>
+    <button
+      *ngIf="
+        selectedRowNode.data.pendingObject.transaction.transactionStatus !==
+        'PENDING_RESUBMIT'
+      "
+      mat-flat-button
+      (click)="onEdit()"
+    >
+      <mat-icon>comment</mat-icon>
+      <span>COMMENTS</span>
+    </button>
+    <button
+      *ngIf="selectedRowNode.data.permittedActions.includes('APPROVE')"
+      mat-flat-button
+      (click)="onAction('APPROVE')"
+    >
+      <mat-icon>check_circle</mat-icon>
+      <span>APPROVE</span>
+    </button>
+    <button
+      *ngIf="selectedRowNode.data.permittedActions.includes('REJECT')"
+      mat-flat-button
+      (click)="onAction('REJECT')"
+    >
+      <mat-icon>close</mat-icon>
+      <span>REJECT</span>
+    </button>
+    <button
+      *ngIf="
+        selectedRowNode.data.permittedActions.includes('NEEDS_RESUBMISSION')
+      "
+      mat-flat-button
+      (click)="onAction('NEEDS_RESUBMISSION')"
+    >
+      <mat-icon>report_problem</mat-icon>
+      <span>NEEDS RESUBMISSION</span>
+    </button>
+    <button
+      *ngIf="selectedRowNode.data.permittedActions.includes('DISCARD')"
+      mat-flat-button
+      (click)="onAction('DISCARD')"
+    >
+      <mat-icon>not_interested</mat-icon>
+      <span>DISCARD</span>
+    </button>
+    <button
+      *ngIf="selectedRowNode.data.permittedActions.includes('RESUBMIT')"
+      mat-flat-button
+      (click)="onAction('RESUBMIT')"
+    >
+      <mat-icon>input</mat-icon>
+      <span>RESUBMIT</span>
+    </button>
+  </div>
+</div>
+<br />
+<div class="page-size-selector">
+  Page Size:
+  <select
+    #paginationSelect
+    (change)="onPageSizeChanged(paginationSelect.value)"
+    [(ngModel)]="pageSize"
+  >
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+  </select>
+</div>
+<ag-grid-angular
+  #agGrid
+  class="ag-theme-alpine"
+  [gridOptions]="gridOptions"
+  [domLayout]="domLayout"
+  [columnDefs]="columnDefs"
+  [editType]="editType"
+  [defaultColDef]="defaultColDef"
+  [frameworkComponents]="frameworkComponents"
+  [tooltipShowDelay]="tooltipShowDelay"
+  (selectionChanged)="onSelectionChanged($event)"
+  [suppressClickEdit]="true"
+  (gridReady)="onGridReady($event)"
+  (cellDoubleClicked)="onCellDoubleClicked($event)"
+  (cellEditingStarted)="onCellEditingStarted($event)"
+  (cellEditingStopped)="onCellEditingStopped($event)"
+  (rowEditingStopped)="onRowEditingStopped($event)"
+  (componentStateChanged)="onComponentStateChanged($event)"
+>
+</ag-grid-angular>
+<ngx-spinner
+  *ngIf="isLoading"
+  color="black"
+  type="line-scale"
+  size="medium"
+></ngx-spinner>
