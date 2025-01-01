@@ -14,7 +14,7 @@ export class TdsService {
   constructor (private http: HttpClient) { }
 
   getAllTdsApplicabilities(page, size) {
-    return this.http.get<{ content: TdsApplicability[], totalElements: number; }>(this.baseUrl + "/tdsApplicabilities/", {
+    return this.http.get<{ content: TdsApplicability[], totalElements: number; }>(this.baseUrl + "/tds-applicability/", {
       params: {
         "page": page,
         "size": size
@@ -23,14 +23,14 @@ export class TdsService {
   }
 
   addTdsApplicability(tds: TdsApplicability) {
-    return this.http.post<TdsApplicability>(this.baseUrl + "/tdsApplicabilities/add", tds);
+    return this.http.post<TdsApplicability>(this.baseUrl + "/tds-applicability/add", tds);
   }
 
   modifyTdsApplicability(tds: TdsApplicability) {
-    return this.http.put<TdsApplicability>(this.baseUrl + "/tdsApplicabilities/modify", tds);
+    return this.http.put<TdsApplicability>(this.baseUrl + "/tds-applicability/modify", tds);
   }
 
   deleteTdsApplicability(taxId: number) {
-    return this.http.delete(this.baseUrl + "/tdsApplicabilities/remove/" + taxId);
+    return this.http.delete(this.baseUrl + "/tds-applicability/remove/" + taxId);
   }
 }

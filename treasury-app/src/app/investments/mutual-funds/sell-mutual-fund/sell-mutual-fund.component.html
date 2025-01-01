@@ -30,10 +30,9 @@
             <mat-label>Scheme Name</mat-label>
             <input type="text" formControlName="scheme" matInput />
           </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Scheme Type</mat-label>
-            <input type="text" formControlName="schemeType" matInput />
-          </mat-form-field>
+          <div *ngIf="schemeType" class="error">
+            <span>{{ schemeType }}</span>
+          </div>
           <mat-form-field appearance="outline">
             <mat-label>Portfolio Quantity</mat-label>
             <input type="number" formControlName="portfolioQuantity" matInput />

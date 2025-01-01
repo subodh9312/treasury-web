@@ -33,10 +33,10 @@ export class BuyMutualFundComponent implements OnInit {
 
   isEdit: boolean = false;
   errorMessage: any = null;
+  schemeType: string = "";
   isLoading = false;
   fundFamilies = [];
   schemesForFundFamily: NAV[] = [];
-  schemeTypes = [];
   countries = [];
   companies: Company[];
   accounts: Account[] = [];
@@ -56,9 +56,7 @@ export class BuyMutualFundComponent implements OnInit {
     this.companyService.getAllCompanies(0, Constants.MAX_PAGE_SIZE).subscribe(res => {
       this.companies = res.content;
     });
-    this.enumService.getSchemeTypes().subscribe(res => {
-      this.schemeTypes = res;
-    });
+    
     this.enumService.getHoldingIntentions().subscribe(res => {
       this.holdingIntentions = res;
     });
@@ -85,7 +83,6 @@ export class BuyMutualFundComponent implements OnInit {
       company: [this.mutualFundInvestment.company, Validators.required],
       fundFamily: [this.mutualFundInvestment.netAssetValue.fundFamily, Validators.required],
       scheme: [{ value: this.mutualFundInvestment.netAssetValue, disabled: true }, Validators.required],
-      schemeType: [this.mutualFundInvestment.schemeType, Validators.required],
       transactionAmount: [this.mutualFundInvestment.transaction.transactionAmount, Validators.required],
       debitAccount: [{value:this.mutualFundInvestment.transaction.debitAccount,disabled:true}, Validators.required],
       valueDate: [this.mutualFundInvestment.transaction.valueDate, Validators.required],
@@ -148,7 +145,6 @@ export class BuyMutualFundComponent implements OnInit {
     const mutualFundInvestment: MutualFundInvestment = {
       investmentId: null,
       netAssetValue: form.value.scheme,
-      schemeType: form.value.schemeType,
       transaction: {
         transactionAmount: form.value.transactionAmount,
         transactionSide: 'BUY',
@@ -224,6 +220,11 @@ export class BuyMutualFundComponent implements OnInit {
       this.f.scheme.enable();
     });
   }
+
+  onSchemeSelected(event) {
+    this.schemeType = "This is a " + event.fundType + " fund.";
+  }
+
   onCompanySelected(event){    
     this.companyService.getCompanyAccounts(event.companyId).subscribe(res => {
       this.accounts = res;
@@ -273,7 +274,6 @@ export class BuyMutualFundComponent implements OnInit {
       netAssetValue: {
         fundFamily: null
       },
-      schemeType: null,
       transaction: {
         transactionAmount: 0,
         debitAccount: null,

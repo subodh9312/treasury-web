@@ -27,6 +27,7 @@ export class SellMutualFundComponent implements OnInit {
 
   isEdit: boolean = false;
   errorMessage: any = null;
+  schemeType: string = "";
   isLoading = false;
   transactionFrequencies = [];
 
@@ -51,11 +52,12 @@ export class SellMutualFundComponent implements OnInit {
       this.sellMutualFundInvestment = this.workflowPendingMutualFundInvestment.pendingObject;
     }
 
+    this.schemeType = "This is a " + this.sellMutualFundInvestment.netAssetValue.fundType + " fund.";
+
     this.sellMutualFund = this.fb.group({
       company: [{ value: this.sellMutualFundInvestment.company.name, disabled: true }, Validators.required],
       fundFamily: [{ value: this.sellMutualFundInvestment.netAssetValue.fundFamily, disabled: true }, Validators.required],
       scheme: [{ value: this.sellMutualFundInvestment.netAssetValue.schemeName, disabled: true }, Validators.required],
-      schemeType: [{ value: this.sellMutualFundInvestment.schemeType, disabled: true }, Validators.required],
       portfolioQuantity: [{ value: this.sellMutualFundInvestment.transaction.portfolio.quantity, disabled: true }, Validators.required],
       transactionType: [true, Validators.required],
       transactionAmount: [this.sellMutualFundInvestment.transaction.transactionAmount, Validators.required],
@@ -99,7 +101,6 @@ export class SellMutualFundComponent implements OnInit {
     const mutualFundInvestment: MutualFundInvestment = {
       investmentId: null,
       netAssetValue: this.sellMutualFundInvestment.netAssetValue,
-      schemeType: this.sellMutualFundInvestment.schemeType,
       transaction: {
         transactionAmount: form.value.transactionAmount,
         transactionSide: 'SELL',

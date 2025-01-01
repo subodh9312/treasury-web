@@ -60,7 +60,7 @@
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Scheme Name</mat-label>
-            <mat-select formControlName="scheme" [compareWith]="compareObjects">
+            <mat-select formControlName="scheme" [compareWith]="compareObjects" (valueChange)="onSchemeSelected($event)">
               <mat-option
                 *ngFor="let nav of schemesForFundFamily"
                 [value]="nav"
@@ -76,24 +76,9 @@
               </span>
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Scheme Type</mat-label>
-            <mat-select formControlName="schemeType">
-              <mat-option
-                *ngFor="let schemeType of schemeTypes"
-                [value]="schemeType"
-              >
-                {{ schemeType }}
-              </mat-option>
-            </mat-select>
-            <mat-error>
-              <span *ngIf="!f.schemeType.valid && f.schemeType.touched">
-                <span *ngIf="f.schemeType.errors.required">
-                  Please select Scheme Type!
-                </span>
-              </span>
-            </mat-error>
-          </mat-form-field>
+          <div *ngIf="schemeType" class="error">
+            <span>{{ schemeType }}</span>
+          </div>
           <mat-form-field appearance="outline">
             <mat-label>Transaction Amount</mat-label>
             <input type="number" formControlName="transactionAmount" matInput />

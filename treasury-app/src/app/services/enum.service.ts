@@ -19,10 +19,6 @@ export class EnumService {
     return this.http.get<[]>(this.baseUrl + "/enum/currencies");
   }
 
-  getSchemeTypes() {
-    return this.http.get<[]>(this.baseUrl + "/enum/schemeTypes");
-  }
-
   getHoldingIntentions() {
     return this.http.get<[]>(this.baseUrl + "/enum/holdingIntentions");
   }
