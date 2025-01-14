@@ -1,0 +1,32 @@
+<div class="body">
+    <div class="main-container">
+      <div id="log-in" class="left-container log-in">
+        <!-- <div>
+        <img src="../../../assets/images/logo-removebg.png" alt="img-fluid logo">
+      </div> -->
+        <div style="width: 100%;">
+          <form class="signup-form" [formGroup]="loginForm" #formDirective="ngForm"
+            (ngSubmit)="onFormSubmit(loginForm, formDirective)">
+            <!-- <mat-error *ngIf="errorMessage" class="error">
+            <span>{{ errorMessage }}</span>
+            <span (click)="errorMessage = null" class="close"
+              ><mat-icon color="primary">clear</mat-icon></span
+            >
+          </mat-error> -->
+            <input type="username" name="username" formControlName="username" placeholder="Username">
+            <input type="password" name="password" formControlName="password" placeholder="Password">
+            <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">
+              LOGIN
+            </button>
+            <br>
+            <div> Forgot password </div>
+            <div (click)="popup.openPopup()"> Terms and Conditions </div>
+            <ngx-spinner></ngx-spinner>
+          </form>
+        </div>
+        <div class="login-link-container"></div>
+      </div>
+      <div class="right-container"></div>
+    </div>
+    <app-terms-and-conditions-dialog #popup></app-terms-and-conditions-dialog>
+  </div>

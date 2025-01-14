@@ -1,0 +1,85 @@
+
+<!-- <app-header></app-header> -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../../../assets/images/bank.png" routerLink="/dashboard" alt="logo">
+      <h2 routerLink="/dashboard">Treasury</h2>
+    </div>
+    <ul class="sidebar-links">
+      <h4><span> Investment </span></h4>
+        <li *ngFor="let item of InvestmentMenu">
+            <a (click)="toggleDropdown(item)">
+            <span class="material-icons"> dashboard</span>
+            <!-- material-symbols-outlined add materical-icons for using this  -->
+            <span>{{ item.label }}</span>
+            </a>
+            <div *ngIf="item.children && item.expanded">
+                <li *ngFor="let subItem of item.children">
+                  <a class="sub-item"  routerLink="{{subItem.route}}">{{ subItem.label }}</a>
+                </li>
+            </div>
+        </li>
+        
+
+      <!-- <li><a>
+          <span class="material-symbols-outlined"> dashboard
+          </span> New Investment </a></li>
+      <li><a>
+          <span class="material-symbols-outlined"> dashboard
+          </span> Redemption </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Borrowing </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Recent Transaction </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Mark/Unmark Lien </a></li> -->
+      <h4><span> Reports </span></h4>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Holding Position </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Investment Policy<br> Compliance </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Average Investment/Yield 
+          <br>/ROI Analysis </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Maturity Profile </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span>Safety (Credit Rating)<br> Profile </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Transaction Listing </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span>Open/Pending Transactions </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span>Restricted Cash Report </a></li>
+      <h4><span> Accounting</span></h4>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> MF Profit and Loss Report </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> FD Interest Report</a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> TDS Report</a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Interest Calculator </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> Capital Gain Calculation </a></li>
+      <li><a>
+          <span class="material-icons"> dashboard
+          </span> MTM</a></li>
+    </ul>
+  </aside>

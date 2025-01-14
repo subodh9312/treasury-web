@@ -19,8 +19,18 @@ import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: 'login', component: LoginComponent },
   {
     path: 'admin',
     component: AdminComponent,
@@ -29,18 +39,18 @@ const routes: Routes = [
       roles: ["TREASURY_ADMIN", "SYSTEM_ADMIN"]
     }
   },
-  { path: 'user', component: UserComponent },
-  { path: 'investments', component: InvestmentsComponent },
-  { path: 'mutualfunds', component: MutualFundsComponent },
-  { path: 'fixeddeposits', component: FixedDepositsComponent },
-  { path: 'users', component: UsersComponent },
-  { path: 'authorities', component: AuthorityComponent },
-  { path: 'companies', component: CompaniesComponent },
-  { path: 'counterparty', component: CounterpartyComponent },
-  { path: 'taxation', component: TaxesComponent },
-  { path: 'accounts', component: AccountsComponent },
-  { path: 'tds', component: TdsApplicabilitiesComponent },
-  { path: 'loanavailed', component: LoansMasterComponent }
+  // { path: 'user', component: UserComponent },
+  // { path: 'investments', component: InvestmentsComponent },
+  // { path: 'mutualfunds', component: MutualFundsComponent },
+  // { path: 'fixeddeposits', component: FixedDepositsComponent },
+  // { path: 'users', component: UsersComponent },
+  // { path: 'authorities', component: AuthorityComponent },
+  // { path: 'companies', component: CompaniesComponent },
+  // { path: 'counterparty', component: CounterpartyComponent },
+  // { path: 'taxation', component: TaxesComponent },
+  // { path: 'accounts', component: AccountsComponent },
+  // { path: 'tds', component: TdsApplicabilitiesComponent },
+  // { path: 'loanavailed', component: LoansMasterComponent }
 ];
 
 @NgModule({
