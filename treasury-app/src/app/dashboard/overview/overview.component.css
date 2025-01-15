@@ -1,0 +1,47 @@
+.container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin-left: 300px;
+    width: auto;
+    flex-wrap: wrap;
+  }
+  
+  .tabs {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .tab {
+    padding: 10px 15px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    cursor: pointer;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .tab.active {
+    border-bottom: 2px solid blue;
+    color: blue;
+  }
+  
+  .charts {
+    display: flex;
+    gap: 20px;
+
+  }
+  
+  .chart {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .chart1{
+    width: 30%;
+    height: 30%;
+  }
+  /* .chart-box{
+    height: 40%;
+  } */

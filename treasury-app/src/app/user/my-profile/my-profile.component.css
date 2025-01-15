@@ -1,6 +1,7 @@
 mat-card {
   width: 95%;
   height: 80px;
+  overflow: hidden;
 }
 
 mat-card-header {

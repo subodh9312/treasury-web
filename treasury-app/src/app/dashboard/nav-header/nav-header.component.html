@@ -1,0 +1,29 @@
+<!-- <div class="main"> -->
+  
+  <div class="topbar">
+  <div class="toggle">
+    <!-- <ion-icon name="menu-outline"></ion-icon> -->
+  </div>
+  
+  <div class="search">
+    
+  </div>
+  
+  <button class="user" *ngIf="isUserAuthenticated"
+  mat-icon-button
+  [matMenuTriggerFor]="usermenu">
+    <img src="../../../assets/Icons/user.png" alt="">
+  </button>
+  
+  <mat-menu #usermenu="matMenu">
+    <div mat-menu-item [routerLink]="['user']">
+      <mat-icon>dashboard</mat-icon>
+      <span>Profile</span>
+    </div>
+    <button mat-menu-item (click)="onLogout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+<!-- </div> -->
+</div>

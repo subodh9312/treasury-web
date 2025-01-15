@@ -79,7 +79,7 @@ import { ClosedLoansListComponent } from './borrowings/loans-master/closed-loans
 @NgModule({
   declarations: [
     AppComponent,
-    NavHeaderComponent,
+    // NavHeaderComponent,
     LoginComponent,
     AdminComponent,
     UserListComponent,
