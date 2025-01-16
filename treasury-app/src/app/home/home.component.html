@@ -2,6 +2,32 @@
   <br />
   <br />
   <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline">
+        <mat-label>Company</mat-label>
+        <mat-select
+          formControlName="company"
+          [compareWith]="compareObjects"
+          (valueChange)="onCompanySelected($event)"
+        > 
+          <mat-option *ngFor="let comp of companies" [value]="comp">
+            {{ comp.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br />
+      <div *ngIf="companySelected">
+        <apx-chart
+          [series]="chartSeries"
+          [chart]="chartDetails"
+          [title]="chartTitle"
+          [labels]="chartLabels"
+          [dataLabels]="chartDataLabels"
+        ></apx-chart>
+    </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-sm-4" style="margin-left: 100px">
       <mat-card [routerLink]="['admin']">
         <mat-card-header>
@@ -44,7 +70,7 @@
           <mat-card-title>INVESTMENTS</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <div class="row">
+          <div class="row"> 
             <div class="col">
               <strong>MUTUAL FUNDS</strong>
             </div>

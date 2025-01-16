@@ -29,18 +29,18 @@ const routes: Routes = [
       roles: ["TREASURY_ADMIN", "SYSTEM_ADMIN"]
     }
   },
-  { path: 'user', component: UserComponent },
-  { path: 'investments', component: InvestmentsComponent },
-  { path: 'mutualfunds', component: MutualFundsComponent },
-  { path: 'fixeddeposits', component: FixedDepositsComponent },
+  { path: 'user', component: UserComponent, canActivate: [AuthGuard], data: { roles: ["TREASURY_ADMIN", "SYSTEM_ADMIN"]} },
+  { path: 'investments', component: InvestmentsComponent, canActivate: [AuthGuard], data: { roles: ["TRANSACTIONS_MAKER", "TRANSACTIONS_VIEW", "TRANSACTIONS_VERIFIER", "TRANSACTIONS_AUTHORIZER", "SYSTEM_ADMIN" ]} },
+  { path: 'mutualfunds', component: MutualFundsComponent, canActivate: [AuthGuard], data: { roles: ["TRANSACTIONS_MAKER", "TRANSACTIONS_VIEW", "TRANSACTIONS_VERIFIER", "TRANSACTIONS_AUTHORIZER", "SYSTEM_ADMIN"]}  },
+  { path: 'fixeddeposits', component: FixedDepositsComponent, canActivate: [AuthGuard], data: { roles: ["TRANSACTIONS_MAKER", "TRANSACTIONS_VIEW", "TRANSACTIONS_VERIFIER", "TRANSACTIONS_AUTHORIZER", "SYSTEM_ADMIN"]}  },
   { path: 'users', component: UsersComponent },
-  { path: 'authorities', component: AuthorityComponent },
+  { path: 'authorities', component: AuthorityComponent, canActivate: [AuthGuard], data: { roles: ["SYSTEM_ADMIN"]} },
   { path: 'companies', component: CompaniesComponent },
   { path: 'counterparty', component: CounterpartyComponent },
   { path: 'taxation', component: TaxesComponent },
   { path: 'accounts', component: AccountsComponent },
   { path: 'tds', component: TdsApplicabilitiesComponent },
-  { path: 'loanavailed', component: LoansMasterComponent }
+  { path: 'loanavailed', component: LoansMasterComponent, canActivate: [AuthGuard], data: { roles: ["TRANSACTIONS_MAKER", "TRANSACTIONS_VIEW", "TRANSACTIONS_VERIFIER", "TRANSACTIONS_AUTHORIZER", "SYSTEM_ADMIN"]}  }
 ];
 
 @NgModule({

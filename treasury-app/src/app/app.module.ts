@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AgGridModule } from 'ag-grid-angular';
 
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
@@ -148,6 +150,7 @@ import { ClosedLoansListComponent } from './borrowings/loans-master/closed-loans
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    NgApexchartsModule,
     HttpClientXsrfModule.withOptions({
       cookieName: 'XSRF-TOKEN',
       headerName: 'X-XSRF-TOKEN'
